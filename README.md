@@ -1,29 +1,21 @@
-# Folio— Freelance Portfolio Template (HTML · Tailwind · Alpine.js)
+# My Portfolio
 
-#### Preview
+Personal portfolio website showcasing my projects, case studies, and blog.
 
-- [Demo](https://AZHYRE.github.io/folio-html/)
+## 🔗 Live Site
+https://portfolio.azhyre.co.za/
 
-#### Download
+## 🛠️ Built With
+- HTML
+- CSS
+- JavaScript
 
-- [Download from AZHYRE](https://azhyre.co.za/themes/folio-html/)
 
-## Getting Started
+## 📄 Pages
+- `index.html` – Home page
+- `projects.html` – Project showcase
+- `case-study.html` – Detailed case study
+- `blog.html` / `blog-article.html` – Blog
 
-1. Clone Repository
-
-```
-git clone https://github.com/AZHYRE/folio-html.git
-```
-
-## Author
-
-```
-Design and code is completely written by Lyrixcs Miles and development team.
-```
-
-## License
-
-- Design and Code is Copyright &copy; <a href="https://github.com/Lyrixcs-Miles/" target="_blank">Lyrixcs Miles</a>
-- Licensed cover under [MIT]
-- Distributed by <a href="https://AZHYRE.com" target="_blank">AZHYRE</a>
+## 📌 About
+[1-2 sentences about you — who you are, what you're learning/building, what this site is for]
