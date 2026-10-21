@@ -423,7 +423,7 @@
                       <template x-for="tag in p.tags" :key="tag">
                         <span
                           class="text-xs px-2.5 py-1 rounded-full"
-                          :class="tag === p.categoryLabel ? 'bg-zinc-100 dark:bg-zinc-800 text-accent border border-zinc-300 dark:border-zinc-700' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'"
+                          :class="tag === p.categoryLabel ? 'bg-accent text-on-accent border border-transparent' : 'border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300'"
                           x-text="tag"
                         ></span>
                       </template>

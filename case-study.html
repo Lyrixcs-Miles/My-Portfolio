@@ -228,14 +228,15 @@
         color: #a1a1aa;
       }
       .prose-cs blockquote {
-        border-left: 3px solid rgb(var(--accent));
-        padding: 0.75rem 1.25rem;
+        border: 1px solid #e4e4e7;
+        padding: 1rem 1.25rem;
         margin: 0 0 1.8rem;
         background: #f2f2f2;
-        border-radius: 0 8px 8px 0;
+        border-radius: 12px;
       }
       .dark .prose-cs blockquote {
         background: #27272a;
+        border-color: #3f3f46;
       }
       .prose-cs blockquote p {
         color: #52525b;
@@ -261,7 +262,10 @@
 
       /* Stat card */
       .stat-card {
-        border-left: 3px solid rgb(var(--accent));
+        border: 1px solid #e4e4e7;
+      }
+      .dark .stat-card {
+        border-color: #3f3f46;
       }
 
       /* Image caption */
@@ -540,19 +544,19 @@
           <!-- Tags + date -->
           <div class="flex flex-wrap items-center gap-3 mb-6">
             <span
-              class="text-xs bg-zinc-100 dark:bg-zinc-800 text-accent border border-zinc-300 dark:border-zinc-700 px-2.5 py-1 rounded-full"
+              class="text-xs bg-accent text-on-accent border border-transparent px-2.5 py-1 rounded-full"
               >Web app</span
             >
             <span
-              class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-2.5 py-1 rounded-full"
+              class="text-xs border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-2.5 py-1 rounded-full"
               >React Router</span
             >
             <span
-              class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-2.5 py-1 rounded-full"
+              class="text-xs border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-2.5 py-1 rounded-full"
               >Node.js</span
             >
             <span
-              class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-2.5 py-1 rounded-full"
+              class="text-xs border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-2.5 py-1 rounded-full"
               >Supabase</span
             >
             <span class="text-xs text-zinc-400 ml-1">2025–2026 · In development</span>
@@ -1032,7 +1036,7 @@
               <div class="p-5">
                 <div class="flex gap-2 mb-2">
                   <span
-                    class="text-xs bg-zinc-100 dark:bg-zinc-800 text-accent border border-zinc-300 dark:border-zinc-700 px-2.5 py-1 rounded-full"
+                    class="text-xs bg-accent text-on-accent border border-transparent px-2.5 py-1 rounded-full"
                     >Shopify</span
                   >
                 </div>
@@ -1063,7 +1067,7 @@
               <div class="p-5">
                 <div class="flex gap-2 mb-2">
                   <span
-                    class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-2.5 py-1 rounded-full"
+                    class="text-xs border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-2.5 py-1 rounded-full"
                     >Shopify</span
                   >
                 </div>
@@ -1094,7 +1098,7 @@
               <div class="p-5">
                 <div class="flex gap-2 mb-2">
                   <span
-                    class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-2.5 py-1 rounded-full"
+                    class="text-xs border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-2.5 py-1 rounded-full"
                     >Website</span
                   >
                 </div>
