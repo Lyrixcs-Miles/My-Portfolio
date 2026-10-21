@@ -22,15 +22,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Novu — SaaS Dashboard redesign case study by Arnold. How a full UX overhaul reduced cognitive load by 40% and improved trial-to-paid conversion."
+      content="CurShip case study by Richard Mazhindu: a shipping app for South African Shopify stores, built with React Router, Node.js and Supabase."
     />
-    <meta name="author" content="Arnold" />
+    <meta name="author" content="Anotidaishe (Richard) Mazhindu" />
     <meta
       property="og:title"
-      content="Novu — SaaS Dashboard · Case Study by Arnold"
+      content="CurShip · Case Study — Richard Mazhindu"
     />
     <meta property="og:type" content="article" />
-    <title>Novu — SaaS Dashboard · Case Study — Arnold</title>
+    <title>CurShip · Case Study — Richard Mazhindu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script
       defer
@@ -105,13 +105,15 @@
         position: absolute;
         bottom: -2px;
         left: 0;
-        width: 0;
+        width: 100%;
         height: 1.5px;
         background: currentColor;
-        transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       }
       .nav-link:hover::after {
-        width: 100%;
+        transform: scaleX(1);
       }
       .btn-primary {
         position: relative;
@@ -154,7 +156,10 @@
         height: 3px;
         background: #ff6b2b;
         z-index: 100;
-        transition: width 0.1s linear;
+        width: 100%;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.1s linear;
       }
 
       /* Reveal */
@@ -296,7 +301,7 @@
     <!-- Reading progress bar -->
     <div
       class="progress-bar"
-      :style="`width:${progress}%`"
+      :style="`transform:scaleX(${progress / 100})`"
       role="progressbar"
       :aria-valuenow="progress"
       aria-valuemin="0"
@@ -317,8 +322,8 @@
           href="index.html"
           class="font-display font-bold text-xl tracking-tight z-10"
         >
-          <span class="text-zinc-900 dark:text-white">Arn</span
-          ><span class="text-accent">old</span>
+          <span class="text-zinc-900 dark:text-white">Rich</span
+          ><span class="text-accent">ard</span>
         </a>
         <ul
           class="hidden md:flex items-center gap-8 text-sm font-medium"
@@ -532,31 +537,35 @@
           <div class="flex flex-wrap items-center gap-3 mb-6">
             <span
               class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full"
-              >SaaS</span
+              >Web app</span
             >
             <span
               class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-2.5 py-1 rounded-full"
-              >Figma</span
+              >React Router</span
             >
             <span
               class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-2.5 py-1 rounded-full"
-              >Tailwind</span
+              >Node.js</span
             >
-            <span class="text-xs text-zinc-400 ml-1">2025 · 6 weeks</span>
+            <span
+              class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-2.5 py-1 rounded-full"
+              >Supabase</span
+            >
+            <span class="text-xs text-zinc-400 ml-1">2025–2026 · In development</span>
           </div>
 
           <h1
             class="reveal font-display font-bold text-4xl md:text-5xl lg:text-6xl text-zinc-900 dark:text-white leading-tight mb-6"
           >
-            Novu — SaaS Dashboard Redesign
+            CurShip — Shipping for South African Shopify stores
           </h1>
 
           <p
             class="reveal d1 text-xl text-zinc-500 dark:text-zinc-400 leading-relaxed mb-10 max-w-2xl"
           >
-            A complete UX and UI overhaul of a B2B notification management
-            platform — reducing cognitive load, streamlining the core workflow,
-            and converting more trial users into paying customers.
+            A Shopify app that lets a merchant see what an order costs to ship,
+            book a courier, print the label and follow the parcel, without
+            leaving Shopify.
           </p>
 
           <!-- Meta row -->
@@ -565,10 +574,10 @@
           >
             <div>
               <p class="text-xs text-zinc-400 uppercase tracking-widest mb-1">
-                Client
+                Type
               </p>
               <p class="font-medium text-zinc-900 dark:text-white text-sm">
-                Novu Inc.
+                Own product
               </p>
             </div>
             <div>
@@ -576,7 +585,7 @@
                 Role
               </p>
               <p class="font-medium text-zinc-900 dark:text-white text-sm">
-                Lead UI/UX Designer
+                Design &amp; development
               </p>
             </div>
             <div>
@@ -584,15 +593,15 @@
                 Timeline
               </p>
               <p class="font-medium text-zinc-900 dark:text-white text-sm">
-                Jan – Feb 2025
+                2025 – 2026
               </p>
             </div>
             <div>
               <p class="text-xs text-zinc-400 uppercase tracking-widest mb-1">
-                Deliverables
+                Demo
               </p>
               <p class="font-medium text-zinc-900 dark:text-white text-sm">
-                Figma, HTML/CSS
+                <a href="https://curship.vercel.app" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">curship.vercel.app ↗</a>
               </p>
             </div>
           </div>
@@ -600,68 +609,68 @@
 
         <!-- ═══ HERO IMAGE ═══ -->
         <div class="max-w-6xl mx-auto px-6 mb-16">
-          <div class="reveal photo-frame w-full h-72 md:h-[480px] rounded-3xl">
+          <div class="reveal photo-frame w-full h-72 md:h-[520px] rounded-3xl border border-zinc-100 dark:border-zinc-800">
             <img
-              src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1400&q=80"
-              alt="Novu — SaaS Dashboard redesign hero"
+              src="resources/imgs/projects/curship.webp"
+              alt="CurShip home dashboard running on sample data"
               loading="eager"
+              style="object-position: top"
             />
           </div>
+          <p class="img-caption">
+            The CurShip home dashboard in demo mode, on sample data.
+          </p>
         </div>
 
-        <!-- ═══ RESULTS BANNER ═══ -->
+        <!-- ═══ STATUS BANNER ═══ -->
         <div class="max-w-4xl mx-auto px-6 mb-16">
           <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-4">
             <div
               class="stat-card bg-zinc-50 dark:bg-zinc-900 rounded-2xl p-5 pl-6"
             >
-              <p
-                class="font-display font-bold text-3xl text-zinc-900 dark:text-white"
-              >
-                −40%
+              <p class="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-white">
+                Real orders
               </p>
               <p
                 class="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-snug"
               >
-                Cognitive load (SUS score)
+                Fulfilment, labels and refunds tested in a dev store
               </p>
             </div>
             <div
               class="stat-card bg-zinc-50 dark:bg-zinc-900 rounded-2xl p-5 pl-6"
             >
-              <p class="font-display font-bold text-3xl text-accent">+27%</p>
+              <p class="font-display font-bold text-2xl md:text-3xl text-accent">
+                Sandbox
+              </p>
               <p
                 class="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-snug"
               >
-                Trial-to-paid conversion
+                Courier booking tested with The Courier Guy
               </p>
             </div>
             <div
               class="stat-card bg-zinc-50 dark:bg-zinc-900 rounded-2xl p-5 pl-6"
             >
-              <p
-                class="font-display font-bold text-3xl text-zinc-900 dark:text-white"
-              >
-                −35%
+              <p class="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-white">
+                Test mode
               </p>
               <p
                 class="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-snug"
               >
-                Support tickets (onboarding)
+                Wallet top-ups (Paystack test keys)
               </p>
             </div>
             <div
               class="stat-card bg-zinc-50 dark:bg-zinc-900 rounded-2xl p-5 pl-6"
             >
-              <p
-                class="font-display font-bold text-3xl text-zinc-900 dark:text-white"
-              >
-                4.8/5
+              <p class="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-white">
+                Not yet
               </p>
               <p
                 class="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-snug"
               >
-                Post-launch NPS
+                Launched to merchants
               </p>
             </div>
           </div>
@@ -671,83 +680,43 @@
         <div class="max-w-3xl mx-auto px-6 pb-4 prose-cs">
           <h2>The brief</h2>
           <p>
-            Novu is a B2B notification infrastructure platform — it lets
-            developers route, manage, and monitor notifications across email,
-            SMS, push, and in-app channels. The product was technically solid,
-            but the dashboard had grown organically over two years without a
-            coherent design strategy. By early 2025, the team were seeing high
-            churn in the 14-day trial window and receiving consistent feedback
-            that the platform was "powerful but overwhelming."
+            South African Shopify stores ship through local couriers, but the
+            work usually happens outside Shopify: getting a quote on the
+            courier's site, copying the address across, booking, then coming
+            back to mark the order as fulfilled. It's slow, and it's easy to
+            make mistakes.
           </p>
           <p>
-            My mandate was simple: fix the first-hour experience without
-            rebuilding the product from scratch. The budget was fixed and the
-            engineering team had six weeks to ship.
+            I set out to build a shipping app that keeps the whole job inside
+            Shopify, from the price of a delivery to the tracking link the
+            customer receives.
           </p>
 
-          <blockquote>
-            <p>
-              "We're losing users in the first 20 minutes. They sign up, see the
-              dashboard, and just bounce. The product does exactly what they
-              need — they just can't find it."
-            </p>
-          </blockquote>
-
-          <h2>Discovery & research</h2>
-          <h3>User interviews</h3>
-          <p>
-            I ran 9 user interviews with a mix of current paying customers and
-            recently churned trial users. The sessions were 45-minute moderated
-            usability tests combined with post-task interviews. Key findings:
-          </p>
+          <h2>What it does</h2>
           <ul>
             <li>
-              7 of 9 users couldn't locate the "Workflows" section without help
-              during their first session
+              <strong>A CurShip block on the order page</strong> with shipping
+              options and booking status.
             </li>
             <li>
-              The notification log and the analytics panel were confused for one
-              another by 5 users
+              <strong>"Book with CurShip"</strong> for orders ticked on the
+              Orders list, to book several orders at once.
             </li>
             <li>
-              The sidebar had 14 top-level navigation items — users reported
-              feeling "unsure where to start"
+              <strong>Labels in Shopify's Print menu</strong>, next to
+              Shopify's own documents.
             </li>
             <li>
-              Trial users specifically wanted a "get your first notification
-              live" path, not a feature overview
+              <strong>Cancel with refund.</strong> Cancelling in Shopify cancels
+              the booking and refunds it.
+            </li>
+            <li>
+              <strong>A portal on CurShip's own site</strong> that does the
+              same work, including parcels that have no Shopify order.
             </li>
           </ul>
 
-          <h3>Heuristic audit</h3>
-          <p>
-            I ran a full Nielsen heuristic evaluation of the existing interface
-            and identified 23 violations across 6 categories. The most critical
-            were around visibility of system status, recognition over recall,
-            and error prevention in the workflow builder.
-          </p>
-        </div>
-
-        <!-- Full-width image -->
-        <div class="max-w-5xl mx-auto px-6 mb-4">
-          <div class="reveal photo-frame w-full h-56 md:h-80 rounded-2xl">
-            <img
-              src="https://images.unsplash.com/photo-1581472723648-909f4851d4ae?w=1200&q=80"
-              alt="Existing dashboard audit — heuristic violations mapped"
-              loading="lazy"
-            />
-          </div>
-          <p class="img-caption">
-            Existing dashboard with heuristic violations annotated during the
-            audit phase.
-          </p>
-        </div>
-
-        <div class="max-w-3xl mx-auto px-6 pb-4 prose-cs">
-          <h2>Design strategy</h2>
-          <p>
-            Based on the research, I built the redesign around three principles:
-          </p>
+          <h2>Design principles</h2>
         </div>
 
         <!-- 3-column principles -->
@@ -770,7 +739,7 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                   />
                 </svg>
               </div>
@@ -778,14 +747,13 @@
                 class="font-display font-bold text-zinc-900 dark:text-white mb-2"
                 style="font-size: 1rem; margin: 0 0 0.5rem; color: inherit"
               >
-                Progressive disclosure
+                Stay inside Shopify
               </h3>
               <p
                 class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed"
                 style="margin: 0; color: inherit"
               >
-                Show only what's needed for the current task. Advanced features
-                revealed on demand, not upfront.
+                Put CurShip where merchants already work: the order page, the Orders list and the Print menu.
               </p>
             </div>
             <div
@@ -805,7 +773,7 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
+                    d="M4 6h16M4 10h16M4 14h16M4 18h16"
                   />
                 </svg>
               </div>
@@ -813,14 +781,13 @@
                 class="font-display font-bold text-zinc-900 dark:text-white mb-2"
                 style="font-size: 1rem; margin: 0 0 0.5rem; color: inherit"
               >
-                Opinionated navigation
+                One order or fifty
               </h3>
               <p
                 class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed"
                 style="margin: 0; color: inherit"
               >
-                Reduce the sidebar to 6 core items. Group secondary actions in
-                context panels rather than global nav.
+                Booking one parcel and booking a batch use the same flow, so there's nothing new to learn.
               </p>
             </div>
             <div
@@ -840,7 +807,7 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+                    d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2h-2"
                   />
                 </svg>
               </div>
@@ -848,15 +815,13 @@
                 class="font-display font-bold text-zinc-900 dark:text-white mb-2"
                 style="font-size: 1rem; margin: 0 0 0.5rem; color: inherit"
               >
-                Goal-first onboarding
+                Try it without accounts
               </h3>
               <p
                 class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed"
                 style="margin: 0; color: inherit"
               >
-                Replace the feature tour with a 3-step "send your first
-                notification" flow that delivers an aha-moment in under 5
-                minutes.
+                A demo mode runs the full portal on sample data, so anyone can see it without a Shopify store or API keys.
               </p>
             </div>
           </div>
@@ -864,20 +829,15 @@
 
         <div class="max-w-3xl mx-auto px-6 pb-4 prose-cs">
           <h2>Process</h2>
-          <h3>Week 1–2 · Information architecture</h3>
           <p>
-            I ran a card sorting exercise with 12 participants to rebuild the
-            navigation taxonomy from scratch. The 14-item sidebar collapsed to 6
-            primary destinations. I then produced low-fidelity wireframes in
-            Figma for the 8 most-visited screens, running rapid async reviews
-            with the product team using Loom walkthroughs.
+            I built CurShip on Shopify's official React Router app template,
+            with Node.js on the server and Supabase (PostgreSQL) for data.
           </p>
         </div>
 
         <!-- Process steps -->
         <div class="max-w-4xl mx-auto px-6 mb-12">
           <div class="reveal space-y-4">
-            <!-- Step -->
             <div
               class="flex gap-5 bg-zinc-50 dark:bg-zinc-900 rounded-2xl p-6 border border-zinc-100 dark:border-zinc-800"
             >
@@ -886,14 +846,12 @@
                 <p
                   class="font-display font-bold text-zinc-900 dark:text-white mb-1"
                 >
-                  Card sorting + IA rebuild
+                  Research
                 </p>
                 <p
                   class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed"
                 >
-                  Remote card sort with 12 participants via Optimal Workshop. 14
-                  nav items → 6 clear destinations with zero ambiguous
-                  groupings.
+                  Studied what Shopify and the couriers actually allow, and compared existing options such as Evership, Bob Go, The Courier Guy, Pargo and AfterShip. I kept the findings, with sources, in the project docs.
                 </p>
               </div>
             </div>
@@ -905,14 +863,12 @@
                 <p
                   class="font-display font-bold text-zinc-900 dark:text-white mb-1"
                 >
-                  Lo-fi wireframes & async review
+                  The Shopify app
                 </p>
                 <p
                   class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed"
                 >
-                  8 key screens sketched in Figma wireframe mode. Async review
-                  via Loom with the product team — 3 iteration rounds over 4
-                  days.
+                  Set up the app on Shopify's React Router template, with the order-page block, bulk booking from the Orders list and labels in the Print menu.
                 </p>
               </div>
             </div>
@@ -924,14 +880,12 @@
                 <p
                   class="font-display font-bold text-zinc-900 dark:text-white mb-1"
                 >
-                  Hi-fi design & component library
+                  Courier integration
                 </p>
                 <p
                   class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed"
                 >
-                  Full Figma component library built on Auto Layout. 40+
-                  components covering all states (empty, loading, error). Dark
-                  mode tokens included.
+                  Connected The Courier Guy's API for prices, booking and labels, tested against the courier's sandbox.
                 </p>
               </div>
             </div>
@@ -943,14 +897,12 @@
                 <p
                   class="font-display font-bold text-zinc-900 dark:text-white mb-1"
                 >
-                  Usability testing & iteration
+                  Fulfilment and refunds
                 </p>
                 <p
                   class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed"
                 >
-                  5 moderated sessions on the hi-fi prototype. 2 significant UX
-                  issues surfaced and resolved before handoff. SUS score
-                  improved from 54 → 82.
+                  Linked bookings to Shopify fulfilment, and made a cancel in Shopify cancel the booking and refund it. Tested with real orders in a development store.
                 </p>
               </div>
             </div>
@@ -962,150 +914,85 @@
                 <p
                   class="font-display font-bold text-zinc-900 dark:text-white mb-1"
                 >
-                  Handoff & front-end support
+                  Demo and documentation
                 </p>
                 <p
                   class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed"
                 >
-                  Zeroheight design doc + Tailwind CSS implementation of the new
-                  design tokens. Present during sprint to support the
-                  engineering team on edge cases.
+                  Built a demo mode on sample data, hosted at curship.vercel.app, and wrote docs for the architecture, courier integration, hosting and launch list.
                 </p>
               </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Second full-width image -->
-        <div class="max-w-5xl mx-auto px-6 mb-4">
-          <div class="reveal photo-frame w-full h-56 md:h-80 rounded-2xl">
-            <img
-              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80"
-              alt="High-fidelity Figma screens — new dashboard layout"
-              loading="lazy"
-            />
-          </div>
-          <p class="img-caption">
-            Final hi-fi screens showing the redesigned sidebar, dashboard home,
-            and notification workflow builder.
-          </p>
-        </div>
-
-        <!-- Before / After split -->
-        <div class="max-w-5xl mx-auto px-6 mb-12">
-          <div class="reveal grid md:grid-cols-2 gap-4">
-            <div>
-              <div class="photo-frame w-full h-52 rounded-2xl">
-                <img
-                  src="https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=700&q=80"
-                  alt="Before — original dashboard"
-                  loading="lazy"
-                />
-              </div>
-              <p class="img-caption mt-2">
-                Before — 14-item sidebar, no clear entry point
-              </p>
-            </div>
-            <div>
-              <div class="photo-frame w-full h-52 rounded-2xl">
-                <img
-                  src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=700&q=80"
-                  alt="After — redesigned dashboard"
-                  loading="lazy"
-                />
-              </div>
-              <p class="img-caption mt-2">
-                After — 6-item sidebar, goal-first onboarding checklist
-              </p>
             </div>
           </div>
         </div>
 
         <div class="max-w-3xl mx-auto px-6 pb-16 prose-cs">
-          <h2>Key design decisions</h2>
-          <h3>Collapsing the sidebar</h3>
+          <h2>Key decisions</h2>
+          <h3>Building into Shopify's own pages</h3>
           <p>
-            The original sidebar mixed primary destinations with contextual
-            actions and account settings indiscriminately. I applied a strict
-            three-tier hierarchy: primary navigation (6 items, always visible),
-            contextual actions (appear in a right panel when relevant), and
-            account/settings (collapsed under an avatar menu). This alone
-            reduced the cognitive entry cost significantly — users knew where
-            they were and where they could go.
+            A separate dashboard would have been quicker to build, but
+            merchants would have had to keep switching tabs. Putting CurShip
+            on the order page, the Orders list and the Print menu means the
+            shipping step sits right where the order already is.
           </p>
 
-          <h3>The onboarding checklist</h3>
+          <h3>A prepaid wallet</h3>
           <p>
-            Rather than a product tour, I designed a persistent but dismissible
-            checklist embedded in the dashboard home. Three steps: connect a
-            channel, create a workflow, send a test notification. Each step
-            launches an inline mini-wizard that completes within the dashboard
-            without breaking context. In the first month post-launch, 68% of
-            trial users completed all three steps vs 21% previously.
+            Merchants pay for shipping from a prepaid wallet. Bookings are
+            paid from the balance, and cancellations go back into it. The
+            wallet is built for Paystack and currently runs on test keys only.
           </p>
 
-          <h3>Empty states as teachers</h3>
+          <h3>Being clear about what's finished</h3>
           <p>
-            Every empty state in the old design was a blank panel. In the
-            redesign, each empty state includes a one-sentence explanation of
-            what the section does, a primary CTA, and a secondary link to
-            documentation. This reduced support tickets specifically about
-            feature discovery by 35%.
+            The demo shows where the product is going, including returns,
+            claims, automation, analytics and a branded tracking page. I keep
+            a clear line between what works today and what is still planned,
+            in the app and in its documentation.
           </p>
 
-          <h2>Results</h2>
-          <p>
-            The redesign shipped in week 6, exactly on schedule. Metrics were
-            tracked over the following 6 weeks post-launch compared to the same
-            prior period.
-          </p>
+          <h2>Where it stands</h2>
           <ul>
             <li>
-              <strong>SUS (System Usability Scale) score:</strong> 54 → 82 (+28
-              points)
+              <strong>Shopify integration:</strong> real Shopify orders,
+              fulfilment, labels, and cancel with refund, tested in a
+              development store.
             </li>
-            <li><strong>Trial-to-paid conversion rate:</strong> +27%</li>
             <li>
-              <strong>Onboarding completion (3-step flow):</strong> 21% → 68%
+              <strong>Courier booking:</strong> tested in The Courier Guy's
+              sandbox.
             </li>
-            <li><strong>Support tickets (onboarding-related):</strong> −35%</li>
             <li>
-              <strong>Average time to first workflow created:</strong> 18 min →
-              4 min
+              <strong>Payments:</strong> wallet in test mode. No live payments
+              taken.
             </li>
-            <li><strong>Post-launch NPS:</strong> 4.8/5</li>
+            <li>
+              <strong>Launch:</strong> not yet launched to merchants. Next up
+              are live courier booking, live payments and hosting for the
+              real app.
+            </li>
           </ul>
-
-          <blockquote>
-            <p>
-              "Arnold completely changed how we think about our onboarding. The
-              checklist alone added 6 figures to our ARR in the first quarter.
-              Exceptionally thorough process and a pleasure to work with."
-            </p>
-          </blockquote>
 
           <h2>Reflections</h2>
           <p>
-            The biggest lesson from this project: most SaaS UX problems aren't
-            about aesthetics, they're about information architecture. The
-            product was capable — users just couldn't find the value fast
-            enough. A focused IA overhaul delivered more measurable ROI than a
-            visual rebrand ever could have.
+            CurShip is the biggest project I've worked on so far. It taught me
+            that most of the work in an app like this is about understanding
+            the platforms it connects to: Shopify, the courier and the payment
+            provider. The code comes after.
           </p>
           <p>
-            If I were to do it again, I'd push harder for a longer discovery
-            phase. Six weeks is tight for a full dashboard redesign, and we had
-            to make some navigation decisions based on incomplete card-sort
-            data. The results held up, but another round of testing before hi-fi
-            would have given me more confidence on a few borderline calls.
+            It also taught me to write things down. Keeping the research,
+            decisions and launch list in the project's docs makes it much
+            easier to pick the work back up and to explain it to others.
           </p>
 
           <hr />
           <p>
             <em
-              >Interested in a similar engagement?
-              <a href="index.html#contact">Get in touch</a> — I'm available for
-              new projects from Q2 2025.</em
+              >Try the
+              <a href="https://curship.vercel.app" target="_blank" rel="noopener noreferrer">demo on sample data</a>,
+              or read more in
+              <a href="blog-curship.html">Building a shipping app for South African Shopify stores</a>.</em
             >
           </p>
         </div>
@@ -1130,29 +1017,30 @@
             <article
               class="reveal card-h group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors"
             >
-              <div class="photo-frame w-full h-44">
-                <img
-                  src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&q=80"
-                  alt="Finlo — Fintech App"
-                  loading="lazy"
-                />
-              </div>
+              <a
+                href="https://serenq.co.za"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="photo-frame block w-full h-44"
+              >
+                <img src="resources/imgs/projects/serenq.webp" alt="SerenQ screenshot" loading="lazy" style="object-position: top" />
+              </a>
               <div class="p-5">
                 <div class="flex gap-2 mb-2">
                   <span
                     class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full"
-                    >Landing page</span
+                    >Shopify</span
                   >
                 </div>
-                <a href="#">
+                <a href="https://serenq.co.za" target="_blank" rel="noopener noreferrer">
                   <h3
                     class="font-display font-bold text-base text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors"
                   >
-                    Finlo — Fintech App
+                    SerenQ
                   </h3>
                 </a>
-                <a href="#" class="text-sm font-medium text-accent nav-link"
-                  >View project →</a
+                <a href="https://serenq.co.za" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-accent nav-link"
+                  >Visit site ↗</a
                 >
               </div>
             </article>
@@ -1160,29 +1048,30 @@
             <article
               class="reveal card-h group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors"
             >
-              <div class="photo-frame w-full h-44">
-                <img
-                  src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=700&q=80"
-                  alt="Orea — Creative Agency"
-                  loading="lazy"
-                />
-              </div>
+              <a
+                href="https://paws.azhyre.co.za"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="photo-frame block w-full h-44"
+              >
+                <img src="resources/imgs/projects/paws-and-play.webp" alt="Paws &amp; Play screenshot" loading="lazy" style="object-position: top" />
+              </a>
               <div class="p-5">
                 <div class="flex gap-2 mb-2">
                   <span
                     class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-2.5 py-1 rounded-full"
-                    >Agency</span
+                    >Shopify</span
                   >
                 </div>
-                <a href="#">
+                <a href="https://paws.azhyre.co.za" target="_blank" rel="noopener noreferrer">
                   <h3
                     class="font-display font-bold text-base text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors"
                   >
-                    Orea — Creative Agency
+                    Paws &amp; Play
                   </h3>
                 </a>
-                <a href="#" class="text-sm font-medium text-accent nav-link"
-                  >View project →</a
+                <a href="https://paws.azhyre.co.za" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-accent nav-link"
+                  >Visit site ↗</a
                 >
               </div>
             </article>
@@ -1190,29 +1079,30 @@
             <article
               class="reveal card-h group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors"
             >
-              <div class="photo-frame w-full h-44">
-                <img
-                  src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=700&q=80"
-                  alt="Bloom — E-commerce"
-                  loading="lazy"
-                />
-              </div>
+              <a
+                href="https://bowcarry.azhyre.co.za"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="photo-frame block w-full h-44"
+              >
+                <img src="resources/imgs/projects/bowcarry.webp" alt="BowCarry screenshot" loading="lazy" style="object-position: top" />
+              </a>
               <div class="p-5">
                 <div class="flex gap-2 mb-2">
                   <span
                     class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-2.5 py-1 rounded-full"
-                    >E-commerce</span
+                    >Website</span
                   >
                 </div>
-                <a href="#">
+                <a href="https://bowcarry.azhyre.co.za" target="_blank" rel="noopener noreferrer">
                   <h3
                     class="font-display font-bold text-base text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors"
                   >
-                    Bloom — E-commerce
+                    BowCarry
                   </h3>
                 </a>
-                <a href="#" class="text-sm font-medium text-accent nav-link"
-                  >View project →</a
+                <a href="https://bowcarry.azhyre.co.za" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-accent nav-link"
+                  >Visit site ↗</a
                 >
               </div>
             </article>
@@ -1248,11 +1138,11 @@
               <h2
                 class="font-display font-bold text-3xl md:text-4xl text-white mb-4"
               >
-                Got a similar project?
+                Need something built for your store?
               </h2>
               <p class="text-zinc-400 max-w-md mx-auto mb-8">
-                I'm available for new projects. Tell me about what you're
-                building and let's see if we're a good fit.
+                I build Shopify stores, websites and web apps, and I'm open to
+                roles, contracts and freelance work. Let's talk.
               </p>
               <a
                 href="index.html#contact"
@@ -1271,7 +1161,7 @@
         class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4"
       >
         <p class="text-sm text-zinc-400">
-          © <span id="yr"></span> Arnold. All rights reserved. <br />
+          © <span id="yr"></span> Richard Mazhindu. All rights reserved. <br />
           Developed by
           <a
             href="https://github.com/Lyrixcs-Miles/"

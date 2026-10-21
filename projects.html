@@ -9,7 +9,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Projects — Arnold</title>
+    <title>Projects — Richard Mazhindu</title>
+    <meta name="description" content="Projects by Anotidaishe (Richard) Mazhindu: Shopify stores, websites and web applications." />
+    <meta name="author" content="Anotidaishe (Richard) Mazhindu" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script
       defer
@@ -69,13 +71,15 @@
         position: absolute;
         bottom: -2px;
         left: 0;
-        width: 0;
+        width: 100%;
         height: 1.5px;
         background: currentColor;
-        transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       }
       .nav-link:hover::after {
-        width: 100%;
+        transform: scaleX(1);
       }
       ::-webkit-scrollbar {
         width: 5px;
@@ -157,8 +161,8 @@
           href="index.html"
           class="font-display font-bold text-xl tracking-tight z-10"
         >
-          <span class="text-zinc-900 dark:text-white">Arn</span
-          ><span class="text-accent">old</span>
+          <span class="text-zinc-900 dark:text-white">Rich</span
+          ><span class="text-accent">ard</span>
         </a>
         <ul class="hidden md:flex items-center gap-8 text-sm font-medium">
           <li>
@@ -347,8 +351,8 @@
           <p
             class="reveal text-lg text-zinc-500 dark:text-zinc-400 max-w-xl leading-relaxed mb-8"
           >
-            A complete look at my work across UI/UX design, frontend development
-            and landing pages.
+            Shopify stores, websites and web apps I've built for clients and for
+            my own brands.
           </p>
           <div class="reveal flex flex-wrap gap-2">
             <template x-for="f in filterOptions" :key="f.value">
@@ -386,8 +390,27 @@
                 <article
                   class="project-card group h-full rounded-2xl overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors"
                 >
-                  <a :href="p.url" class="block photo-frame w-full h-52">
-                    <img :src="p.img" :alt="p.title" loading="lazy" />
+                  <a
+                    :href="p.url || null"
+                    :target="p.external ? '_blank' : null"
+                    :rel="p.external ? 'noopener noreferrer' : null"
+                    class="relative flex items-center justify-center w-full h-52 bg-gradient-to-br px-6 text-center overflow-hidden"
+                    :class="p.panel"
+                  >
+                    <template x-if="p.img">
+                      <img
+                        :src="p.img"
+                        :alt="'Screenshot of ' + p.name"
+                        loading="lazy"
+                        class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                      />
+                    </template>
+                    <span
+                      x-show="!p.img"
+                      class="font-display font-bold text-4xl text-zinc-900/80 dark:text-white/90"
+                      :class="p.category === 'app' ? '!text-white/90' : ''"
+                      x-text="p.name"
+                    ></span>
                   </a>
                   <div class="p-6">
                     <div class="flex flex-wrap gap-2 mb-3">
@@ -399,7 +422,11 @@
                         ></span>
                       </template>
                     </div>
-                    <a :href="p.url">
+                    <a
+                      :href="p.url || null"
+                      :target="p.external ? '_blank' : null"
+                      :rel="p.external ? 'noopener noreferrer' : null"
+                    >
                       <h3
                         class="font-display font-bold text-lg text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors"
                         x-text="p.title"
@@ -411,10 +438,18 @@
                     ></p>
                     <div class="flex items-center justify-between">
                       <a
+                        x-show="p.url"
                         :href="p.url"
+                        :target="p.external ? '_blank' : null"
+                        :rel="p.external ? 'noopener noreferrer' : null"
                         class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white nav-link"
-                        >View project →</a
-                      >
+                        x-text="p.linkLabel"
+                      ></a>
+                      <span
+                        x-show="!p.url"
+                        class="text-sm text-zinc-400"
+                        x-text="p.linkLabel"
+                      ></span>
                       <span
                         class="text-xs text-zinc-400"
                         x-text="p.year"
@@ -475,7 +510,7 @@
         class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4"
       >
         <p class="text-sm text-zinc-400">
-          &copy; <span id="year"></span> Arnold. All rights reserved.
+          &copy; <span id="year"></span> Richard Mazhindu. All rights reserved.
         </p>
         <p class="text-xs text-zinc-500">
           Built with Tailwind CSS &amp; Alpine.js
@@ -492,112 +527,161 @@
           filter: "all",
 
           filterOptions: [
-            { value: "all", label: "All (9)" },
-            { value: "saas", label: "SaaS" },
-            { value: "landing", label: "Landing page" },
-            { value: "agency", label: "Agency" },
-            { value: "ecommerce", label: "E-commerce" },
+            { value: "all", label: "All" },
+            { value: "shopify", label: "Shopify stores" },
+            { value: "website", label: "Websites" },
+            { value: "app", label: "Web apps & tools" },
           ],
 
+          // To add a project, copy one of these objects. Leave "url" empty
+          // if there's nothing public to link to yet.
           allProjects: [
             {
               id: 1,
-              title: "Novu — SaaS Dashboard",
-              category: "saas",
-              categoryLabel: "SaaS",
-              tags: ["SaaS", "Figma", "Tailwind"],
-              year: "2025",
-              desc: "Complete redesign of a B2B notification platform. Reduced cognitive load by 40% and improved trial-to-paid conversion.",
-              img: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=700&q=80",
+              name: "CurShip",
+              img: "resources/imgs/projects/curship.webp",
+              title: "CurShip — Shopify delivery app",
+              category: "app",
+              categoryLabel: "Web app",
+              tags: ["Web app", "React", "Node.js", "Supabase"],
+              year: "2025–2026",
+              desc: "Shipping app for South African Shopify stores: real orders, fulfilment, labels and cancel with refund, tested in a development store. Courier booking tested in The Courier Guy's sandbox. Not yet launched.",
+              panel: "from-zinc-900 via-zinc-800 to-accent",
               url: "case-study.html",
+              external: false,
+              linkLabel: "View case study →",
             },
             {
               id: 2,
-              title: "Finlo — Fintech App",
-              category: "landing",
-              categoryLabel: "Landing page",
-              tags: ["Landing page", "Fintech", "Alpine.js"],
-              year: "2024",
-              desc: "Marketing site and onboarding flow for a personal finance app targeting young professionals.",
-              img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&q=80",
-              url: "case-study.html",
+              name: "SerenQ",
+              img: "resources/imgs/projects/serenq.webp",
+              title: "SerenQ — Shopify store",
+              category: "shopify",
+              categoryLabel: "Shopify",
+              tags: ["Shopify", "Client project"],
+              year: "2025–2026",
+              desc: "Designed and configured the Shopify storefront, including layout, store settings and products. Ongoing storefront maintenance.",
+              panel: "from-orange-100 to-orange-300 dark:from-zinc-800 dark:to-accent/60",
+              url: "https://serenq.co.za",
+              external: true,
+              linkLabel: "Visit site ↗",
             },
             {
               id: 3,
-              title: "Orea — Creative Agency",
-              category: "agency",
-              categoryLabel: "Agency",
-              tags: ["Agency", "Animation"],
-              year: "2024",
-              desc: "Bold editorial site for a ./resources/imgs/my-profile-image-based branding studio. Scroll-driven animations and custom cursor.",
-              img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=700&q=80",
-              url: "case-study.html",
+              name: "Paws & Play",
+              img: "resources/imgs/projects/paws-and-play.webp",
+              title: "Paws & Play — Shopify store",
+              category: "shopify",
+              categoryLabel: "Shopify",
+              tags: ["Shopify", "Client project"],
+              year: "2025–2026",
+              desc: "Designed and set up the Shopify storefront, with ongoing maintenance support.",
+              panel: "from-zinc-200 to-orange-200 dark:from-zinc-800 dark:to-zinc-700",
+              url: "https://paws.azhyre.co.za",
+              external: true,
+              linkLabel: "Visit site ↗",
             },
             {
               id: 4,
-              title: "Vesta — Real Estate",
-              category: "landing",
-              categoryLabel: "Landing page",
-              tags: ["Landing page", "Real Estate"],
-              year: "2024",
-              desc: "Conversion-focused landing page for a proptech startup entering the French market.",
-              img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=700&q=80",
-              url: "case-study.html",
+              name: "Azhyre Apparel",
+              img: "resources/imgs/projects/azhyre-apparel.webp",
+              title: "Azhyre Apparel — own-brand store",
+              category: "shopify",
+              categoryLabel: "Shopify",
+              tags: ["Shopify", "Own brand"],
+              year: "2025–2026",
+              desc: "My own streetwear brand's Shopify store. I designed and configured it, and maintain the storefront layouts, store settings and product setup.",
+              panel: "from-zinc-200 to-orange-200 dark:from-zinc-800 dark:to-zinc-700",
+              url: "https://azhyre.co.za",
+              external: true,
+              linkLabel: "Visit site ↗",
             },
             {
               id: 5,
-              title: "Arkio — SaaS Analytics",
-              category: "saas",
-              categoryLabel: "SaaS",
-              tags: ["SaaS", "Dashboard", "Figma"],
-              year: "2024",
-              desc: "Data visualisation dashboard for a B2B analytics platform. Designed for clarity at high data density.",
-              img: "https://images.unsplash.com/photo-1581472723648-909f4851d4ae?w=700&q=80",
-              url: "case-study.html",
+              name: "Azhyre Tech",
+              title: "Azhyre Tech — own-brand store",
+              category: "shopify",
+              categoryLabel: "Shopify",
+              tags: ["Shopify", "Own brand"],
+              year: "2025–2026",
+              desc: "One of my own brand's Shopify stores. I designed and configured it, and maintain the storefront layouts, store settings and product setup.",
+              panel: "from-orange-100 to-orange-300 dark:from-zinc-800 dark:to-accent/60",
+              url: "",
+              external: true,
+              linkLabel: "Link coming soon",
             },
             {
               id: 6,
-              title: "Bloom — E-commerce",
-              category: "ecommerce",
-              categoryLabel: "E-commerce",
-              tags: ["E-commerce", "Shopify"],
-              year: "2023",
-              desc: "Custom Shopify theme for a sustainable cosmetics brand. Mobile-first with high emphasis on product imagery.",
-              img: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=700&q=80",
-              url: "case-study.html",
+              name: "Bella's Delight",
+              title: "Bella's Delight — Shopify store",
+              category: "shopify",
+              categoryLabel: "Shopify",
+              tags: ["Shopify", "Client project", "In progress"],
+              year: "2026",
+              desc: "Developing the Shopify storefront. Not yet open for orders.",
+              panel: "from-zinc-200 to-orange-200 dark:from-zinc-800 dark:to-zinc-700",
+              url: "",
+              external: true,
+              linkLabel: "In progress",
             },
             {
               id: 7,
-              title: "Mira — Health App",
-              category: "landing",
-              categoryLabel: "Landing page",
-              tags: ["Landing page", "Health", "Tailwind"],
-              year: "2023",
-              desc: "App landing page for a mental wellness startup. Warm, accessible design with strong social proof.",
-              img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=700&q=80",
-              url: "case-study.html",
-            },
-            {
-              id: 8,
-              title: "Noto — Agency Rebrand",
-              category: "agency",
-              categoryLabel: "Agency",
-              tags: ["Agency", "Rebrand"],
-              year: "2023",
-              desc: "Full rebrand and website for a digital communications agency in Lyon.",
-              img: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=700&q=80",
-              url: "case-study.html",
+              name: "BowCarry",
+              img: "resources/imgs/projects/bowcarry.webp",
+              title: "BowCarry — product page",
+              category: "website",
+              categoryLabel: "Website",
+              tags: ["Website", "HTML / CSS / JS", "Own brand"],
+              year: "2026",
+              desc: "A one-page shop for The Complete Set, a 1200ml insulated flask with its carry accessories. A single HTML file, kept light for mobile data.",
+              panel: "from-orange-100 to-orange-300 dark:from-zinc-800 dark:to-accent/60",
+              url: "https://bowcarry.azhyre.co.za",
+              external: true,
+              linkLabel: "Visit site ↗",
             },
             {
               id: 9,
-              title: "Kova — E-commerce",
-              category: "ecommerce",
-              categoryLabel: "E-commerce",
-              tags: ["E-commerce", "Figma"],
-              year: "2023",
-              desc: "Product page redesign and checkout optimisation for a DTC furniture brand. Reduced cart abandonment by 18%.",
-              img: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=700&q=80",
-              url: "case-study.html",
+              name: "Blush&Bloom",
+              img: "resources/imgs/projects/blush-bloom.webp",
+              title: "Blush&Bloom — tumbler storefront",
+              category: "website",
+              categoryLabel: "Website",
+              tags: ["Website", "React", "TypeScript"],
+              year: "2026",
+              desc: "A storefront for accessorised tumblers in four colours, with an animated collection page, product pages and a shopping bag saved in the browser. Built with React and Vite. Online checkout isn't connected yet.",
+              panel: "from-orange-100 to-orange-300 dark:from-zinc-800 dark:to-accent/60",
+              url: "https://bloom.azhyre.co.za",
+              external: true,
+              linkLabel: "Visit site ↗",
+            },
+            {
+              id: 10,
+              name: "Chioma",
+              img: "resources/imgs/projects/chioma.webp",
+              title: "Chioma — model & creator portfolio",
+              category: "website",
+              categoryLabel: "Website",
+              tags: ["Website", "Client project", "HTML / CSS / JS"],
+              year: "2026",
+              desc: "A portfolio site for a model and content creator working in fashion, beauty and lifestyle, with her portfolio, offers, brands and a work-with-me page.",
+              panel: "from-zinc-200 to-orange-200 dark:from-zinc-800 dark:to-zinc-700",
+              url: "https://soma.azhyre.co.za",
+              external: true,
+              linkLabel: "Visit site ↗",
+            },
+            {
+              id: 8,
+              name: "Forge",
+              title: "Forge — Python command-line tool",
+              category: "app",
+              categoryLabel: "Tool",
+              tags: ["Tool", "Python"],
+              year: "2025–2026",
+              desc: "A command-line tool that creates and lists projects, and checks developer tools. Part of my personal development workspace. Early stage.",
+              panel: "from-zinc-900 via-zinc-800 to-accent",
+              url: "https://github.com/Lyrixcs-Miles/Forge",
+              external: true,
+              linkLabel: "View on GitHub ↗",
             },
           ],
 
