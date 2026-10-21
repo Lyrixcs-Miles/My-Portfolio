@@ -30,12 +30,16 @@
               display: ["PT Sans", "sans-serif"],
               body: ["DM Sans", "sans-serif"],
             },
-            colors: { accent: "#FF6B2B", "accent-light": "#FF8F5C" },
+            colors: { accent: "rgb(var(--accent) / <alpha-value>)", "accent-light": "rgb(var(--accent-light) / <alpha-value>)", "on-accent": "rgb(var(--on-accent) / <alpha-value>)" },
           },
         },
       };
     </script>
     <style>
+/* Monochrome palette: the accent flips with the theme. */
+:root{--accent:15 15 15;--accent-light:77 77 77;--on-accent:255 255 255}
+.dark,.on-dark{--accent:222 222 222;--accent-light:188 188 188;--on-accent:15 15 15}
+
       *,
       *::before,
       *::after {
@@ -88,7 +92,7 @@
         background: transparent;
       }
       ::-webkit-scrollbar-thumb {
-        background: #ff6b2b;
+        background: rgb(var(--accent));
         border-radius: 99px;
       }
       body {
@@ -238,7 +242,7 @@
           </button>
           <a
             href="index.html#contact"
-            class="hidden md:inline-flex items-center gap-2 btn-primary bg-accent text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors"
+            class="hidden md:inline-flex items-center gap-2 btn-primary bg-accent text-on-accent text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors"
             >Hire me &rarr;</a
           >
           <button
@@ -358,7 +362,7 @@
             <template x-for="f in filterOptions" :key="f.value">
               <button
                 @click="filter = f.value"
-                :class="filter === f.value ? 'bg-accent text-white border-accent' : 'bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700 hover:border-accent'"
+                :class="filter === f.value ? 'bg-accent text-on-accent border-accent' : 'bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700 hover:border-accent'"
                 class="text-sm px-4 py-1.5 rounded-full border transition-colors"
                 x-text="f.label"
               ></button>
@@ -419,7 +423,7 @@
                       <template x-for="tag in p.tags" :key="tag">
                         <span
                           class="text-xs px-2.5 py-1 rounded-full"
-                          :class="tag === p.categoryLabel ? 'bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'"
+                          :class="tag === p.categoryLabel ? 'bg-zinc-100 dark:bg-zinc-800 text-accent border border-zinc-300 dark:border-zinc-700' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'"
                           x-text="tag"
                         ></span>
                       </template>
@@ -482,7 +486,7 @@
       <section class="pb-24">
         <div class="max-w-6xl mx-auto px-6">
           <div
-            class="bg-zinc-900 dark:bg-zinc-800 rounded-3xl p-10 md:p-14 text-center relative overflow-hidden"
+            class="on-dark bg-zinc-900 dark:bg-zinc-800 rounded-3xl p-10 md:p-14 text-center relative overflow-hidden"
           >
             <div
               class="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl pointer-events-none"
@@ -507,7 +511,7 @@
               </p>
               <a
                 href="index.html#contact"
-                class="inline-flex items-center gap-2 btn-primary bg-accent text-white font-medium px-8 py-3.5 rounded-full hover:bg-accent-light transition-colors"
+                class="inline-flex items-center gap-2 btn-primary bg-accent text-on-accent font-medium px-8 py-3.5 rounded-full hover:bg-accent-light transition-colors"
                 >Start a project &rarr;</a
               >
             </div>
@@ -646,7 +650,7 @@
               tags: ["Web app", "React", "Node.js", "Supabase"],
               year: "2025–2026",
               desc: "Shipping app for South African Shopify stores: real orders, fulfilment, labels and cancel with refund, tested in a development store. Courier booking tested in The Courier Guy's sandbox. Not yet launched.",
-              panel: "from-zinc-900 via-zinc-800 to-accent",
+              panel: "from-zinc-900 via-zinc-800 to-zinc-600",
               url: "case-study.html",
               external: false,
               linkLabel: "View case study →",
@@ -665,7 +669,7 @@
               tags: ["Shopify", "Client project"],
               year: "2025–2026",
               desc: "Designed and configured the Shopify storefront, including layout, store settings and products. Ongoing storefront maintenance.",
-              panel: "from-orange-100 to-orange-300 dark:from-zinc-800 dark:to-accent/60",
+              panel: "from-zinc-100 to-zinc-400 dark:from-zinc-800 dark:to-zinc-600",
               url: "https://serenq.co.za",
               external: true,
               linkLabel: "Visit site ↗",
@@ -684,7 +688,7 @@
               tags: ["Shopify", "Client project"],
               year: "2025–2026",
               desc: "Designed and set up the Shopify storefront, with ongoing maintenance support.",
-              panel: "from-zinc-200 to-orange-200 dark:from-zinc-800 dark:to-zinc-700",
+              panel: "from-zinc-200 to-zinc-300 dark:from-zinc-800 dark:to-zinc-700",
               url: "https://paws.azhyre.co.za",
               external: true,
               linkLabel: "Visit site ↗",
@@ -699,7 +703,7 @@
               tags: ["Shopify", "Own brand"],
               year: "2025–2026",
               desc: "My own streetwear brand's Shopify store. I designed and configured it, and maintain the storefront layouts, store settings and product setup.",
-              panel: "from-zinc-200 to-orange-200 dark:from-zinc-800 dark:to-zinc-700",
+              panel: "from-zinc-200 to-zinc-300 dark:from-zinc-800 dark:to-zinc-700",
               url: "https://azhyre.co.za",
               external: true,
               linkLabel: "Visit site ↗",
@@ -713,7 +717,7 @@
               tags: ["Shopify", "Own brand"],
               year: "2025–2026",
               desc: "One of my own brand's Shopify stores. I designed and configured it, and maintain the storefront layouts, store settings and product setup.",
-              panel: "from-orange-100 to-orange-300 dark:from-zinc-800 dark:to-accent/60",
+              panel: "from-zinc-100 to-zinc-400 dark:from-zinc-800 dark:to-zinc-600",
               url: "",
               external: true,
               linkLabel: "Link coming soon",
@@ -728,7 +732,7 @@
               tags: ["Shopify", "Own brand"],
               year: "2026",
               desc: "My own brand's Shopify store for filtered shower heads and bundles. I designed and configured the storefront, products and store settings.",
-              panel: "from-zinc-200 to-orange-200 dark:from-zinc-800 dark:to-zinc-700",
+              panel: "from-zinc-200 to-zinc-300 dark:from-zinc-800 dark:to-zinc-700",
               url: "https://azhyretech.co.za",
               external: true,
               linkLabel: "Visit site ↗",
@@ -742,7 +746,7 @@
               tags: ["Shopify", "Client project", "In progress"],
               year: "2026",
               desc: "Developing the Shopify storefront. Not yet open for orders.",
-              panel: "from-zinc-200 to-orange-200 dark:from-zinc-800 dark:to-zinc-700",
+              panel: "from-zinc-200 to-zinc-300 dark:from-zinc-800 dark:to-zinc-700",
               url: "",
               external: true,
               linkLabel: "In progress",
@@ -761,7 +765,7 @@
               tags: ["Website", "HTML / CSS / JS", "Own brand"],
               year: "2026",
               desc: "A one-page shop for The Complete Set, a 1200ml insulated flask with its carry accessories. A single HTML file, kept light for mobile data.",
-              panel: "from-orange-100 to-orange-300 dark:from-zinc-800 dark:to-accent/60",
+              panel: "from-zinc-100 to-zinc-400 dark:from-zinc-800 dark:to-zinc-600",
               url: "https://bowcarry.azhyre.co.za",
               external: true,
               linkLabel: "Visit site ↗",
@@ -782,7 +786,7 @@
               tags: ["Website", "React", "TypeScript"],
               year: "2026",
               desc: "A storefront for accessorised tumblers in four colours, with an animated collection page, product pages and a shopping bag saved in the browser. Built with React and Vite. Online checkout isn't connected yet.",
-              panel: "from-orange-100 to-orange-300 dark:from-zinc-800 dark:to-accent/60",
+              panel: "from-zinc-100 to-zinc-400 dark:from-zinc-800 dark:to-zinc-600",
               url: "https://bloom.azhyre.co.za",
               external: true,
               linkLabel: "Visit site ↗",
@@ -801,7 +805,7 @@
               tags: ["Website", "Client project", "HTML / CSS / JS"],
               year: "2026",
               desc: "A portfolio site for a model and content creator working in fashion, beauty and lifestyle, with her portfolio, offers, brands and a work-with-me page.",
-              panel: "from-zinc-200 to-orange-200 dark:from-zinc-800 dark:to-zinc-700",
+              panel: "from-zinc-200 to-zinc-300 dark:from-zinc-800 dark:to-zinc-700",
               url: "https://soma.azhyre.co.za",
               external: true,
               linkLabel: "Visit site ↗",
@@ -815,7 +819,7 @@
               tags: ["Tool", "Python"],
               year: "2025–2026",
               desc: "A command-line tool that creates and lists projects, and checks developer tools. Part of my personal development workspace. Early stage.",
-              panel: "from-zinc-900 via-zinc-800 to-accent",
+              panel: "from-zinc-900 via-zinc-800 to-zinc-600",
               url: "https://github.com/Lyrixcs-Miles/Forge",
               external: true,
               linkLabel: "View on GitHub ↗",

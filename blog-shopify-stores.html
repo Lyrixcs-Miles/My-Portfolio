@@ -42,12 +42,16 @@
               display: ["PT Sans", "sans-serif"],
               body: ["DM Sans", "sans-serif"],
             },
-            colors: { accent: "#FF6B2B", "accent-light": "#FF8F5C" },
+            colors: { accent: "rgb(var(--accent) / <alpha-value>)", "accent-light": "rgb(var(--accent-light) / <alpha-value>)", "on-accent": "rgb(var(--on-accent) / <alpha-value>)" },
           },
         },
       };
     </script>
     <style>
+/* Monochrome palette: the accent flips with the theme. */
+:root{--accent:15 15 15;--accent-light:77 77 77;--on-accent:255 255 255}
+.dark,.on-dark{--accent:222 222 222;--accent-light:188 188 188;--on-accent:15 15 15}
+
       *,
       *::before,
       *::after {
@@ -71,7 +75,7 @@
         background: transparent;
       }
       ::-webkit-scrollbar-thumb {
-        background: #ff6b2b;
+        background: rgb(var(--accent));
         border-radius: 99px;
       }
       body {
@@ -187,7 +191,7 @@
       }
       .prose-article code:not(pre code) {
         background: #f4f4f5;
-        color: #ff6b2b;
+        color: rgb(var(--accent));
         padding: 0.15em 0.4em;
         border-radius: 4px;
         font-size: 0.875em;
@@ -196,10 +200,10 @@
         background: #27272a;
       }
       .prose-article blockquote {
-        border-left: 3px solid #ff6b2b;
+        border-left: 3px solid rgb(var(--accent));
         padding: 0.75rem 1.25rem;
         margin: 0 0 1.6rem;
-        background: #fff7f4;
+        background: #f2f2f2;
         border-radius: 0 8px 8px 0;
       }
       .dark .prose-article blockquote {
@@ -214,7 +218,7 @@
         color: #a1a1aa;
       }
       .prose-article a {
-        color: #ff6b2b;
+        color: rgb(var(--accent));
         text-decoration: underline;
         text-underline-offset: 3px;
       }
@@ -233,7 +237,7 @@
         top: 0;
         left: 0;
         height: 3px;
-        background: #ff6b2b;
+        background: rgb(var(--accent));
         z-index: 100;
         width: 100%;
         transform: scaleX(0);
@@ -371,7 +375,7 @@
           </button>
           <a
             href="index.html#contact"
-            class="hidden md:inline-flex items-center gap-2 btn-primary bg-accent text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors"
+            class="hidden md:inline-flex items-center gap-2 btn-primary bg-accent text-on-accent text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors"
             >Hire me →</a
           >
           <button
@@ -496,7 +500,7 @@
 
           <div class="flex items-center gap-3 mb-5">
             <span
-              class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full"
+              class="text-xs bg-zinc-100 dark:bg-zinc-800 text-accent border border-zinc-300 dark:border-zinc-700 px-2.5 py-1 rounded-full"
               >Shopify</span
             >
             <span class="text-xs text-zinc-400"
