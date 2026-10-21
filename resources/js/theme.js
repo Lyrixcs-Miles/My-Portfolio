@@ -1,6 +1,7 @@
 // Shared Tailwind settings for every page. Load right after the Tailwind CDN script.
-// Palette: "Jacaranda" — Pretoria's jacaranda trees, from night bloom to blossom mist,
-// with Soft Apricot as the warm highlight.
+// Palette: "Storm" — a night thunderstorm over water, from abyss navy to sea mist,
+// with Spray (soft sea-green) as the highlight. Token names are kept from the
+// earlier palette so pages don't need renaming: night, violet, jaca, petal, lilac, mist, sun.
 tailwind.config = {
   darkMode: 'class',
   theme: {
@@ -17,22 +18,22 @@ tailwind.config = {
 
         // neutrals
         chaos: '#0F0F0F',
-        cloud: '#EFEAF8',
-        ink: '#17131F', // dark-mode page background
-        paper: '#FAF8FC', // light-mode page background
-        muted: '#5F5878', // secondary text, light mode
-        'muted-dark': '#B8AFD3', // secondary text, dark mode
-        line: '#E4DCF3', // hairlines, light mode
-        'line-strong': '#D3C8EA',
+        cloud: '#E6ECEC',
+        ink: '#061019', // dark-mode page background
+        paper: '#F5F7F7', // light-mode page background
+        muted: '#4E6266', // secondary text, light mode
+        'muted-dark': '#9FB5B6', // secondary text, dark mode
+        line: '#DCE3E3', // hairlines, light mode
+        'line-strong': '#C5D0D0',
 
-        // jacaranda palette, darkest to lightest
-        night: '#2E2640',
-        violet: '#5A4A80',
-        jaca: '#8572B8',
-        petal: '#A796D6',
-        lilac: '#CBBFEA',
-        mist: '#ECE6F8',
-        sun: '#F2CBB5',
+        // storm palette, darkest to lightest (sun = highlight)
+        night: '#041421',
+        violet: '#052530',
+        jaca: '#1F4B53',
+        petal: '#4C7275',
+        lilac: '#86B9B0',
+        mist: '#DDE6E4',
+        sun: '#A9D3CB',
       },
     },
   },
