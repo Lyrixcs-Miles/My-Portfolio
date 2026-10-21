@@ -16,7 +16,7 @@
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
 
 <script>
 tailwind.config = {
@@ -24,7 +24,13 @@ tailwind.config = {
   theme: {
     extend: {
       fontFamily: { display: ['PT Sans','sans-serif'], body: ['DM Sans','sans-serif'] },
-      colors: { accent: "rgb(var(--accent) / <alpha-value>)", "accent-light": "rgb(var(--accent-light) / <alpha-value>)", "on-accent": "rgb(var(--on-accent) / <alpha-value>)" }
+      colors: {
+        accent: "rgb(var(--accent) / <alpha-value>)",
+        "accent-light": "rgb(var(--accent-light) / <alpha-value>)",
+        "on-accent": "rgb(var(--on-accent) / <alpha-value>)",
+        chaos: '#0F0F0F', wax: '#2B2B2B', thunder: '#4D4D4D', dull: '#717171',
+        spanish: '#979797', dust: '#BCBCBC', cloud: '#DEDEDE'
+      }
     }
   }
 }
@@ -44,328 +50,375 @@ body{transition:background-color .3s,color .3s}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:rgb(var(--accent));border-radius:99px}
 
-/* gentle fade-in on scroll */
-.reveal{opacity:0;transform:translateY(12px);transition:opacity .5s ease,transform .5s ease}
-.reveal.in{opacity:1;transform:none}
+/* nav underline */
+.nl{position:relative}
+.nl::after{content:'';position:absolute;bottom:-3px;left:0;width:100%;height:1.5px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .22s ease}
+.nl:hover::after,.nl[aria-current]::after{transform:scaleX(1)}
 
-/* underline that grows on hover */
-.ul{background-image:linear-gradient(currentColor,currentColor);background-size:0 1px;background-position:0 100%;background-repeat:no-repeat;transition:background-size .25s ease}
-.ul:hover,.ul.on{background-size:100% 1px}
+/* ── The palette stack ── */
+.band-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s cubic-bezier(.65,0,.25,1)}
+.band.open .band-body{grid-template-rows:1fr}
+.band-body > div{overflow:hidden;min-height:0}
+.band-shot{transform:translateY(24px) rotate(-1.5deg);opacity:0;transition:transform .6s cubic-bezier(.2,.8,.2,1) .1s,opacity .4s ease .1s}
+.band.open .band-shot{transform:none;opacity:1}
+.band-plus{transition:transform .35s ease}
+.band.open .band-plus{transform:rotate(45deg)}
 
-/* list rows */
-.row-arrow{transition:transform .2s ease}
-.row:hover .row-arrow{transform:translateX(4px)}
+/* one orchestrated entrance: the swatches deal in from the left */
+@keyframes deal{from{transform:translateX(-6%);opacity:0}to{transform:none;opacity:1}}
+.deal{animation:deal .7s cubic-bezier(.2,.8,.2,1) both}
 
-section[id]{scroll-margin-top:72px}
+/* outlined display type */
+.stroke-text{color:transparent;-webkit-text-stroke:2px #0F0F0F}
+.dark .stroke-text{-webkit-text-stroke-color:#DEDEDE}
+
+section[id]{scroll-margin-top:80px}
 a:focus-visible,button:focus-visible{outline:2px solid rgb(var(--accent));outline-offset:4px}
+.band button:focus-visible,.band a:focus-visible{outline-color:currentColor}
 @media(prefers-reduced-motion:reduce){
   html.scroll-smooth{scroll-behavior:auto}
   *,*::before,*::after{transition:none!important;animation:none!important}
-  .reveal{opacity:1;transform:none}
+  .band-shot{transform:none;opacity:1}
 }
 [x-cloak]{display:none!important}
 </style>
 </head>
 
-<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased">
+<body class="bg-white dark:bg-zinc-950 text-chaos dark:text-cloud antialiased">
 
 <!-- ═══ NAV ═══ -->
-<header class="sticky top-0 z-50 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md border-b border-transparent transition-colors"
-  :class="sc ? '!border-zinc-200 dark:!border-zinc-800' : ''">
-  <nav class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between gap-6" aria-label="Main navigation">
-    <a href="#top" class="font-display font-bold text-lg tracking-tight">Richard Mazhindu</a>
-    <div class="flex items-center gap-5 sm:gap-7 text-sm">
-      <a href="#work"    class="ul hidden sm:inline text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='work'?'on !text-zinc-900 dark:!text-white':''">Work</a>
-      <a href="#about"   class="ul hidden sm:inline text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='about'?'on !text-zinc-900 dark:!text-white':''">About</a>
-      <a href="#writing" class="ul hidden sm:inline text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='writing'?'on !text-zinc-900 dark:!text-white':''">Writing</a>
-      <a href="#contact" class="ul text-zinc-900 dark:text-white font-medium">Contact</a>
-      <button @click="dark=!dark" class="w-8 h-8 flex items-center justify-center rounded-full text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors" :aria-label="dark?'Switch to light mode':'Switch to dark mode'">
+<header class="sticky top-0 z-50 bg-white/85 dark:bg-zinc-950/85 backdrop-blur-md">
+  <nav class="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between gap-6" aria-label="Main navigation">
+    <a href="index.html" class="flex items-center gap-2.5 font-display font-bold text-lg tracking-tight">
+      <span class="flex h-5 w-5 overflow-hidden rounded-[5px]" aria-hidden="true">
+        <span class="flex-1 bg-chaos dark:ring-1 dark:ring-inset dark:ring-wax"></span><span class="flex-1 bg-dull"></span><span class="flex-1 bg-cloud"></span>
+      </span>
+      Richard Mazhindu
+    </a>
+
+    <ul class="hidden md:flex items-center gap-8 text-sm" role="list">
+      <li><a href="projects.html" class="nl text-zinc-600 dark:text-zinc-400 hover:text-chaos dark:hover:text-white transition-colors">Work</a></li>
+      <li><a href="case-study.html" class="nl text-zinc-600 dark:text-zinc-400 hover:text-chaos dark:hover:text-white transition-colors">Case study</a></li>
+      <li><a href="blog.html" class="nl text-zinc-600 dark:text-zinc-400 hover:text-chaos dark:hover:text-white transition-colors">Blog</a></li>
+      <li><a href="#about" class="nl text-zinc-600 dark:text-zinc-400 hover:text-chaos dark:hover:text-white transition-colors">About</a></li>
+    </ul>
+
+    <div class="flex items-center gap-2">
+      <button @click="dark=!dark" class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors" :aria-label="dark?'Switch to light mode':'Switch to dark mode'">
         <svg x-show="!dark" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
         <svg x-show="dark" x-cloak class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
       </button>
+      <a href="#contact" class="hidden sm:inline-flex items-center bg-accent text-on-accent text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors">Hire me</a>
+      <button @click="mm=!mm" class="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800" :aria-expanded="mm" aria-label="Menu">
+        <svg x-show="!mm" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg x-show="mm" x-cloak class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
     </div>
   </nav>
+  <div x-show="mm" x-cloak x-transition.opacity class="md:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
+    <ul class="max-w-7xl mx-auto px-5 py-4 grid grid-cols-2 gap-3 text-base" role="list">
+      <li><a href="projects.html" class="block py-1">Work</a></li>
+      <li><a href="case-study.html" class="block py-1">Case study</a></li>
+      <li><a href="blog.html" class="block py-1">Blog</a></li>
+      <li><a href="#about" @click="mm=false" class="block py-1">About</a></li>
+      <li><a href="#contact" @click="mm=false" class="block py-1 font-medium">Contact</a></li>
+    </ul>
+  </div>
 </header>
 
-<main id="top" class="max-w-5xl mx-auto px-6">
+<main>
 
 <!-- ═══ INTRO ═══ -->
-<section class="pt-16 md:pt-24 pb-16 md:pb-20">
-  <div class="reveal flex items-center gap-4 mb-10">
-    <img src="./resources/imgs/my-profile-image" alt="Richard Mazhindu" class="w-14 h-14 rounded-full object-cover bg-zinc-200 dark:bg-zinc-800" loading="eager">
-    <div class="text-sm leading-snug">
-      <p class="font-medium">Anotidaishe (Richard) Mazhindu</p>
-      <p class="text-zinc-500 dark:text-zinc-400 flex items-center gap-2">
-        <span class="inline-block w-1.5 h-1.5 rounded-full bg-accent" aria-hidden="true"></span>
-        Pretoria, South Africa &middot; Available for work
-      </p>
+<section class="max-w-7xl mx-auto px-5 sm:px-8 pt-12 md:pt-20 pb-12 md:pb-16">
+  <div class="grid lg:grid-cols-12 gap-10 lg:gap-8 items-end">
+    <div class="lg:col-span-8">
+      <h1 class="font-display font-bold tracking-[-0.035em] leading-[0.92] text-[clamp(3rem,8.5vw,7.5rem)]">
+        Shopify stores<br>
+        <span class="stroke-text">&amp;</span> web apps,<br>
+        <span class="text-dull">made in Pretoria.</span>
+      </h1>
     </div>
-  </div>
-
-  <h1 class="reveal font-display font-bold text-4xl sm:text-5xl md:text-6xl leading-[1.08] tracking-tight max-w-4xl">
-    I build Shopify stores and web apps for growing businesses.
-  </h1>
-  <p class="reveal mt-6 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-2xl">
-    Storefronts, standalone websites and web applications with React, Node.js and Supabase. Open to freelance projects, contracts and development roles.
-  </p>
-
-  <div class="reveal mt-10 flex flex-wrap items-center gap-x-7 gap-y-3 text-sm">
-    <a href="#work" class="inline-flex items-center gap-2 bg-accent text-on-accent font-medium px-6 py-3 rounded-full hover:bg-accent-light transition-colors">See my work</a>
-    <a href="mailto:LyrixcsMiles@gmail.com" class="ul font-medium">LyrixcsMiles@gmail.com</a>
-    <a href="./resources/downloads/Anotidaishe_Mazhindu_CV_v6.pdf" download class="ul text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Download CV (PDF)</a>
-  </div>
-
-  <dl class="reveal mt-16 grid grid-cols-3 border-y border-zinc-200 dark:border-zinc-800 divide-x divide-zinc-200 dark:divide-zinc-800">
-    <div class="py-5 pr-4">
-      <dt class="text-xs text-zinc-500 dark:text-zinc-400">Projects</dt>
-      <dd class="font-display font-bold text-2xl md:text-3xl mt-1">12+</dd>
-    </div>
-    <div class="py-5 px-4 md:px-6">
-      <dt class="text-xs text-zinc-500 dark:text-zinc-400">Clients</dt>
-      <dd class="font-display font-bold text-2xl md:text-3xl mt-1">8+</dd>
-    </div>
-    <div class="py-5 px-4 md:px-6">
-      <dt class="text-xs text-zinc-500 dark:text-zinc-400">Freelancing since</dt>
-      <dd class="font-display font-bold text-2xl md:text-3xl mt-1">2025</dd>
-    </div>
-  </dl>
-</section>
-
-<!-- ═══ WORK ═══ -->
-<section id="work" class="py-16 md:py-20 grid md:grid-cols-12 gap-8">
-  <div class="md:col-span-3">
-    <h2 class="reveal text-sm font-medium text-zinc-500 dark:text-zinc-400 md:sticky md:top-24">Selected work</h2>
-  </div>
-  <div class="md:col-span-9">
-
-    <!-- featured -->
-    <article class="reveal group">
-      <a href="case-study.html" class="block overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 aspect-[16/9]">
-        <img src="./resources/imgs/projects/curship.webp" alt="CurShip dashboard on sample data" loading="lazy" class="w-full h-full object-cover object-top group-hover:scale-[1.02] transition-transform duration-500">
-      </a>
-      <div class="mt-5 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-        <div class="max-w-xl">
-          <h3 class="font-display font-bold text-2xl"><a href="case-study.html" class="ul">CurShip — Shopify delivery app</a></h3>
-          <p class="mt-2 text-zinc-500 dark:text-zinc-400 leading-relaxed">A shipping app for South African Shopify stores. Compare shipping costs, book couriers and manage labels without leaving Shopify. Tested in a development store and the courier's sandbox; not yet launched.</p>
-        </div>
-        <div class="flex sm:flex-col gap-x-5 gap-y-1 text-sm shrink-0 sm:text-right">
-          <a href="case-study.html" class="ul font-medium">Case study →</a>
-          <a href="https://curship.vercel.app" target="_blank" rel="noopener noreferrer" class="ul text-zinc-500 dark:text-zinc-400">Demo ↗</a>
+    <div class="lg:col-span-4 lg:pb-3">
+      <div class="flex items-center gap-4">
+        <img src="./resources/imgs/my-profile-image" alt="Richard Mazhindu" class="w-16 h-16 rounded-full object-cover grayscale bg-zinc-200 dark:bg-zinc-800" loading="eager">
+        <div class="text-sm leading-snug">
+          <p class="font-medium">Anotidaishe (Richard) Mazhindu</p>
+          <p class="text-zinc-500 dark:text-zinc-400">Web developer, available for work</p>
         </div>
       </div>
-      <p class="mt-3 text-xs text-zinc-500 dark:text-zinc-400">Web app &middot; React, Node.js, Supabase &middot; 2025–2026</p>
-    </article>
+      <p class="mt-6 text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-sm">
+        I design and build online stores, websites and web applications for growing businesses, with React, Node.js and Supabase when a store isn't enough.
+      </p>
+      <div class="mt-7 flex flex-wrap items-center gap-3">
+        <a href="#contact" class="inline-flex items-center bg-accent text-on-accent font-medium text-sm px-6 py-3 rounded-full hover:bg-accent-light transition-colors">Start a project</a>
+        <a href="./resources/downloads/Anotidaishe_Mazhindu_CV_v6.pdf" download class="inline-flex items-center border border-zinc-300 dark:border-zinc-700 font-medium text-sm px-6 py-3 rounded-full hover:border-chaos dark:hover:border-cloud transition-colors">Download CV</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- list -->
-    <ul class="mt-14 border-t border-zinc-200 dark:border-zinc-800" role="list">
-      <li class="reveal border-b border-zinc-200 dark:border-zinc-800">
-        <a href="https://serenq.co.za" target="_blank" rel="noopener noreferrer" class="row group flex items-center gap-4 py-4">
-          <img src="./resources/imgs/projects/serenq.webp" alt="" loading="lazy" class="w-20 h-12 rounded-md object-cover object-top bg-zinc-100 dark:bg-zinc-900 shrink-0">
-          <span class="flex-1 min-w-0">
-            <span class="block font-medium">SerenQ</span>
-            <span class="block text-sm text-zinc-500 dark:text-zinc-400 truncate">Shopify store &middot; client</span>
-          </span>
-          <span class="hidden sm:block text-sm text-zinc-500 dark:text-zinc-400">2025–2026</span>
-          <span class="row-arrow text-zinc-400" aria-hidden="true">↗</span>
-        </a>
-      </li>
-      <li class="reveal border-b border-zinc-200 dark:border-zinc-800">
-        <a href="https://paws.azhyre.co.za" target="_blank" rel="noopener noreferrer" class="row group flex items-center gap-4 py-4">
-          <img src="./resources/imgs/projects/paws-and-play.webp" alt="" loading="lazy" class="w-20 h-12 rounded-md object-cover object-top bg-zinc-100 dark:bg-zinc-900 shrink-0">
-          <span class="flex-1 min-w-0">
-            <span class="block font-medium">Paws &amp; Play</span>
-            <span class="block text-sm text-zinc-500 dark:text-zinc-400 truncate">Shopify store &middot; client</span>
-          </span>
-          <span class="hidden sm:block text-sm text-zinc-500 dark:text-zinc-400">2025–2026</span>
-          <span class="row-arrow text-zinc-400" aria-hidden="true">↗</span>
-        </a>
-      </li>
-      <li class="reveal border-b border-zinc-200 dark:border-zinc-800">
-        <a href="https://azhyre.co.za" target="_blank" rel="noopener noreferrer" class="row group flex items-center gap-4 py-4">
-          <img src="./resources/imgs/projects/azhyre-apparel.webp" alt="" loading="lazy" class="w-20 h-12 rounded-md object-cover object-top bg-zinc-100 dark:bg-zinc-900 shrink-0">
-          <span class="flex-1 min-w-0">
-            <span class="block font-medium">Azhyre Apparel</span>
-            <span class="block text-sm text-zinc-500 dark:text-zinc-400 truncate">Shopify store &middot; own brand</span>
-          </span>
-          <span class="hidden sm:block text-sm text-zinc-500 dark:text-zinc-400">2025–2026</span>
-          <span class="row-arrow text-zinc-400" aria-hidden="true">↗</span>
-        </a>
-      </li>
-      <li class="reveal border-b border-zinc-200 dark:border-zinc-800">
-        <a href="https://bloom.azhyre.co.za" target="_blank" rel="noopener noreferrer" class="row group flex items-center gap-4 py-4">
-          <img src="./resources/imgs/projects/blush-bloom.webp" alt="" loading="lazy" class="w-20 h-12 rounded-md object-cover object-top bg-zinc-100 dark:bg-zinc-900 shrink-0">
-          <span class="flex-1 min-w-0">
-            <span class="block font-medium">Blush&amp;Bloom</span>
-            <span class="block text-sm text-zinc-500 dark:text-zinc-400 truncate">Storefront &middot; React</span>
-          </span>
-          <span class="hidden sm:block text-sm text-zinc-500 dark:text-zinc-400">2026</span>
-          <span class="row-arrow text-zinc-400" aria-hidden="true">↗</span>
-        </a>
-      </li>
-      <li class="reveal border-b border-zinc-200 dark:border-zinc-800">
-        <a href="https://soma.azhyre.co.za" target="_blank" rel="noopener noreferrer" class="row group flex items-center gap-4 py-4">
-          <img src="./resources/imgs/projects/chioma.webp" alt="" loading="lazy" class="w-20 h-12 rounded-md object-cover object-top bg-zinc-100 dark:bg-zinc-900 shrink-0">
-          <span class="flex-1 min-w-0">
-            <span class="block font-medium">Chioma</span>
-            <span class="block text-sm text-zinc-500 dark:text-zinc-400 truncate">Portfolio website &middot; client</span>
-          </span>
-          <span class="hidden sm:block text-sm text-zinc-500 dark:text-zinc-400">2026</span>
-          <span class="row-arrow text-zinc-400" aria-hidden="true">↗</span>
-        </a>
-      </li>
-    </ul>
-    <a href="projects.html" class="reveal ul inline-block mt-6 text-sm font-medium">All projects →</a>
+<!-- ═══ THE PALETTE: selected work ═══ -->
+<section id="work" aria-labelledby="work-title" class="max-w-7xl mx-auto px-5 sm:px-8">
+  <div class="flex items-end justify-between gap-6 mb-5">
+    <h2 id="work-title" class="font-display font-bold text-2xl md:text-3xl tracking-tight">Selected work, by shade</h2>
+    <p class="hidden sm:block text-sm text-zinc-500 dark:text-zinc-400">Hover or tap a swatch to open it</p>
+  </div>
+
+  <div class="rounded-[28px] overflow-hidden ring-1 ring-zinc-200 dark:ring-zinc-800" @mouseleave="if (hoverOpen) open = 0">
+    <template x-for="(p, i) in projects" :key="p.name">
+      <article class="band deal" :class="[p.bg, p.fg, open === i ? 'open' : '']" :style="`animation-delay:${i * 70}ms`"
+        @mouseenter="if (canHover) { open = i; hoverOpen = true }">
+        <h3>
+          <button type="button" class="w-full text-left px-5 sm:px-8 py-5 md:py-6 grid grid-cols-[1fr_auto] md:grid-cols-[minmax(0,1fr)_12rem_9rem_2rem] items-center gap-4"
+            @click="open = open === i ? -1 : i; hoverOpen = false" :aria-expanded="open === i" :aria-controls="'band-' + i">
+            <span class="font-display font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight leading-none" x-text="p.name"></span>
+            <span class="hidden md:block text-sm opacity-75" x-text="p.kind"></span>
+            <span class="hidden md:block text-sm opacity-75 tabular-nums">
+              <span x-text="p.swatch"></span><br><span class="opacity-70" x-text="p.hex"></span>
+            </span>
+            <span class="band-plus justify-self-end w-8 h-8 rounded-full border flex items-center justify-center" style="border-color:currentColor" aria-hidden="true">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-width="2.5" d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+        </h3>
+        <div class="band-body" :id="'band-' + i">
+          <div>
+            <div class="px-5 sm:px-8 pb-8 md:pb-10 grid md:grid-cols-12 gap-8 items-end">
+              <div class="md:col-span-5 order-2 md:order-1">
+                <p class="text-sm opacity-75 md:hidden mb-3" x-text="p.kind + ', ' + p.year"></p>
+                <p class="text-base md:text-lg leading-relaxed max-w-md" x-text="p.desc"></p>
+                <div class="mt-6 flex flex-wrap gap-3">
+                  <template x-for="l in p.links" :key="l.label">
+                    <a :href="l.href" :target="l.href.startsWith('http') ? '_blank' : null" :rel="l.href.startsWith('http') ? 'noopener noreferrer' : null"
+                      class="inline-flex items-center gap-2 text-sm font-medium px-5 py-2.5 rounded-full transition-opacity hover:opacity-80"
+                      :class="l.primary ? p.btn : 'border border-current'" x-text="l.label"></a>
+                  </template>
+                </div>
+                <p class="hidden md:block mt-8 text-sm opacity-60" x-text="p.year"></p>
+              </div>
+              <div class="md:col-span-7 order-1 md:order-2">
+                <div class="band-shot rounded-2xl overflow-hidden shadow-2xl shadow-black/30 bg-black/10">
+                  <div class="flex items-center gap-1.5 px-4 h-7 bg-black/20" aria-hidden="true">
+                    <span class="w-2 h-2 rounded-full bg-current opacity-40"></span><span class="w-2 h-2 rounded-full bg-current opacity-40"></span><span class="w-2 h-2 rounded-full bg-current opacity-40"></span>
+                  </div>
+                  <img :src="p.img" :alt="'Screenshot of ' + p.name" loading="lazy" class="block w-full aspect-[16/9] object-cover object-top">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </template>
+  </div>
+
+  <div class="mt-5 flex justify-end">
+    <a href="projects.html" class="nl text-sm font-medium">See all 11 projects</a>
   </div>
 </section>
 
 <!-- ═══ SERVICES ═══ -->
-<section id="services" class="py-16 md:py-20 border-t border-zinc-200 dark:border-zinc-800 grid md:grid-cols-12 gap-8">
-  <div class="md:col-span-3">
-    <h2 class="reveal text-sm font-medium text-zinc-500 dark:text-zinc-400">What I do</h2>
-  </div>
-  <div class="md:col-span-9 grid sm:grid-cols-3 gap-8">
-    <div class="reveal">
-      <h3 class="font-display font-bold text-lg">Shopify stores</h3>
-      <p class="mt-2 text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Storefront design, product listings and store settings, plus maintenance after launch.</p>
+<section id="services" class="max-w-7xl mx-auto px-5 sm:px-8 pt-24 md:pt-32">
+  <h2 class="font-display font-bold tracking-[-0.03em] leading-[0.95] text-[clamp(2.25rem,5vw,4rem)] max-w-3xl">
+    What I can do for your business
+  </h2>
+  <div class="mt-12 grid md:grid-cols-3 border-t-2 border-chaos dark:border-cloud">
+    <div class="pt-7 pb-8 md:pr-8 border-b md:border-b-0 md:border-r border-zinc-200 dark:border-zinc-800">
+      <h3 class="font-display font-bold text-2xl">Shopify stores</h3>
+      <p class="mt-3 text-zinc-600 dark:text-zinc-400 leading-relaxed">A storefront ready for your customers: layout, product listings and store settings, then maintenance after launch so it stays up to date.</p>
     </div>
-    <div class="reveal">
-      <h3 class="font-display font-bold text-lg">Websites &amp; web apps</h3>
-      <p class="mt-2 text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Business websites and custom web applications, from public pages to dashboards.</p>
+    <div class="pt-7 pb-8 md:px-8 border-b md:border-b-0 md:border-r border-zinc-200 dark:border-zinc-800">
+      <h3 class="font-display font-bold text-2xl">Websites &amp; web apps</h3>
+      <p class="mt-3 text-zinc-600 dark:text-zinc-400 leading-relaxed">Business websites in HTML, WordPress or Webflow, and custom web applications with React, Node.js and Supabase.</p>
     </div>
-    <div class="reveal">
-      <h3 class="font-display font-bold text-lg">Design &amp; marketing</h3>
-      <p class="mt-2 text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Ad designs and email campaigns that match your store and brand.</p>
+    <div class="pt-7 pb-8 md:pl-8">
+      <h3 class="font-display font-bold text-2xl">Design &amp; marketing</h3>
+      <p class="mt-3 text-zinc-600 dark:text-zinc-400 leading-relaxed">Ad designs and email campaigns that match your store, made in Figma, Canva and Photoshop.</p>
     </div>
   </div>
 </section>
 
 <!-- ═══ ABOUT ═══ -->
-<section id="about" class="py-16 md:py-20 border-t border-zinc-200 dark:border-zinc-800 grid md:grid-cols-12 gap-8">
-  <div class="md:col-span-3">
-    <h2 class="reveal text-sm font-medium text-zinc-500 dark:text-zinc-400">About</h2>
-  </div>
-  <div class="md:col-span-9 max-w-2xl">
-    <p class="reveal text-xl leading-relaxed">
-      I'm a web developer in Pretoria, South Africa. I build Shopify stores and standalone websites for clients and my own brands, design ads and email campaigns, and build web applications with React, Node.js and Supabase.
-    </p>
-    <p class="reveal mt-5 text-zinc-500 dark:text-zinc-400 leading-relaxed">
-      I started teaching myself web development while still in high school at Hudson Ntsanwisi Senior Secondary School. After matric in 2025, I turned it into client work, trading as <a href="https://azhyre.co.za/" target="_blank" rel="noopener noreferrer" class="ul text-zinc-900 dark:text-white">AZHYRE</a>.
-    </p>
-    <div class="reveal mt-10">
-      <h3 class="text-sm font-medium text-zinc-500 dark:text-zinc-400 mb-3">Stack &amp; tools</h3>
-      <p class="leading-loose">HTML / CSS &middot; JavaScript &middot; React &middot; Node.js &middot; Python &middot; Supabase (PostgreSQL) &middot; Shopify &middot; WordPress &middot; Webflow &middot; Figma &middot; Canva &middot; Photoshop</p>
+<section id="about" class="max-w-7xl mx-auto px-5 sm:px-8 pt-24 md:pt-32">
+  <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+    <div class="lg:col-span-5">
+      <div class="relative max-w-sm">
+        <div class="absolute inset-0 translate-x-4 translate-y-4 rounded-[28px] bg-dust dark:bg-wax" aria-hidden="true"></div>
+        <img src="./resources/imgs/my-profile-image" alt="Anotidaishe (Richard) Mazhindu" loading="lazy" class="relative w-full aspect-[4/5] object-cover rounded-[28px] grayscale contrast-110">
+      </div>
+    </div>
+    <div class="lg:col-span-7">
+      <h2 class="font-display font-bold tracking-[-0.03em] leading-[0.95] text-[clamp(2.25rem,5vw,4rem)]">Self-taught, from a school desk to client work.</h2>
+      <p class="mt-8 text-lg leading-relaxed max-w-2xl">
+        I'm Anotidaishe, though most people call me Richard. I started teaching myself web development while still in high school at Hudson Ntsanwisi Senior Secondary School. After matric in 2025, I turned it into client work, trading as <a href="https://azhyre.co.za/" target="_blank" rel="noopener noreferrer" class="underline underline-offset-4 decoration-1 hover:decoration-2">AZHYRE</a>.
+      </p>
+      <p class="mt-5 text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-2xl">
+        Today I build Shopify stores and websites for clients and for my own brands, design ads and email campaigns, and build web apps like CurShip, a shipping app for South African Shopify stores.
+      </p>
+
+      <dl class="mt-10 grid grid-cols-3 gap-4 max-w-lg">
+        <div class="rounded-2xl bg-cloud text-chaos p-4"><dt class="text-xs">Projects</dt><dd class="font-display font-bold text-3xl mt-1">12+</dd></div>
+        <div class="rounded-2xl bg-spanish text-chaos p-4"><dt class="text-xs">Clients</dt><dd class="font-display font-bold text-3xl mt-1">8+</dd></div>
+        <div class="rounded-2xl bg-wax text-cloud p-4"><dt class="text-xs">Since</dt><dd class="font-display font-bold text-3xl mt-1">2025</dd></div>
+      </dl>
+
+      <h3 class="mt-10 text-sm font-medium text-zinc-500 dark:text-zinc-400">Tools I use</h3>
+      <ul class="mt-3 flex flex-wrap gap-2" role="list">
+        <template x-for="t in ['HTML / CSS','JavaScript','React','Node.js','Python','Supabase (PostgreSQL)','Shopify','WordPress','Webflow','Figma','Canva','Photoshop']" :key="t">
+          <li class="text-sm px-3.5 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700" x-text="t"></li>
+        </template>
+      </ul>
     </div>
   </div>
 </section>
 
 <!-- ═══ REVIEWS ═══ -->
-<section id="reviews" class="py-16 md:py-20 border-t border-zinc-200 dark:border-zinc-800 grid md:grid-cols-12 gap-8">
-  <div class="md:col-span-3">
-    <h2 class="reveal text-sm font-medium text-zinc-500 dark:text-zinc-400">Kind words</h2>
-  </div>
-  <div class="md:col-span-9 space-y-10">
-    <figure class="reveal">
-      <blockquote class="font-display text-xl md:text-2xl leading-snug">"Richard set up our Shopify store from the layout to the products, and he still looks after it for us. When something needs changing, it gets sorted quickly."</blockquote>
-      <figcaption class="mt-3 text-sm text-zinc-500 dark:text-zinc-400">Thandi Mokoena, SerenQ</figcaption>
-    </figure>
-    <figure class="reveal">
-      <blockquote class="font-display text-xl md:text-2xl leading-snug">"We came to Richard with a product list and an idea. He gave us a clean Shopify store that's easy for us to run, and he helps whenever we need something updated."</blockquote>
-      <figcaption class="mt-3 text-sm text-zinc-500 dark:text-zinc-400">Lerato Dlamini, Paws &amp; Play</figcaption>
-    </figure>
-    <figure class="reveal">
-      <blockquote class="font-display text-xl md:text-2xl leading-snug">"Richard built our website and explained each step along the way. He listened to what we wanted and delivered a site we're proud to share with customers."</blockquote>
-      <figcaption class="mt-3 text-sm text-zinc-500 dark:text-zinc-400">Sipho Nkosi, website client</figcaption>
-    </figure>
+<section id="reviews" class="max-w-7xl mx-auto px-5 sm:px-8 pt-24 md:pt-32">
+  <div class="rounded-[28px] bg-cloud text-chaos dark:bg-wax dark:text-cloud px-6 sm:px-10 md:px-16 py-12 md:py-16">
+    <h2 class="font-display font-bold text-2xl md:text-3xl tracking-tight">What clients say</h2>
+    <div class="mt-8 min-h-[12rem] md:min-h-[9rem]">
+      <template x-for="(r, i) in reviews" :key="r.name">
+        <figure x-show="review === i" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
+          <blockquote class="font-display font-bold tracking-[-0.02em] leading-[1.1] text-[clamp(1.6rem,3.4vw,2.75rem)] max-w-4xl" x-text="'“' + r.quote + '”'"></blockquote>
+        </figure>
+      </template>
+    </div>
+    <div class="mt-8 flex flex-wrap gap-2" role="tablist" aria-label="Choose a review">
+      <template x-for="(r, i) in reviews" :key="r.name">
+        <button type="button" role="tab" :aria-selected="review === i" @click="review = i"
+          class="flex items-center gap-3 rounded-full pl-1.5 pr-4 py-1.5 text-left transition-colors"
+          :class="review === i ? 'bg-chaos text-cloud dark:bg-cloud dark:text-chaos' : 'hover:bg-black/5 dark:hover:bg-white/5'">
+          <span class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
+            :class="review === i ? 'bg-cloud text-chaos dark:bg-chaos dark:text-cloud' : 'bg-dust text-chaos dark:bg-thunder dark:text-cloud'" x-text="r.initials"></span>
+          <span class="text-sm leading-tight"><span class="block font-medium" x-text="r.name"></span><span class="block opacity-70" x-text="r.role"></span></span>
+        </button>
+      </template>
+    </div>
   </div>
 </section>
 
-<!-- ═══ WRITING ═══ -->
-<section id="writing" class="py-16 md:py-20 border-t border-zinc-200 dark:border-zinc-800 grid md:grid-cols-12 gap-8">
-  <div class="md:col-span-3">
-    <h2 class="reveal text-sm font-medium text-zinc-500 dark:text-zinc-400">Writing</h2>
+<!-- ═══ BLOG ═══ -->
+<section id="blog" class="max-w-7xl mx-auto px-5 sm:px-8 pt-24 md:pt-32">
+  <div class="flex items-end justify-between gap-6">
+    <h2 class="font-display font-bold tracking-[-0.03em] leading-[0.95] text-[clamp(2.25rem,5vw,4rem)]">From the blog</h2>
+    <a href="blog.html" class="nl text-sm font-medium shrink-0">All articles</a>
   </div>
-  <div class="md:col-span-9">
-    <ul class="border-t border-zinc-200 dark:border-zinc-800" role="list">
-      <li class="reveal border-b border-zinc-200 dark:border-zinc-800">
-        <a href="blog-curship.html" class="row group grid grid-cols-[6.5rem_1fr_auto] items-baseline gap-4 py-4">
-          <time datetime="2026-10-14" class="text-sm text-zinc-500 dark:text-zinc-400">Oct 14, 2026</time>
-          <span class="font-medium">Building a shipping app for South African Shopify stores</span>
-          <span class="row-arrow text-zinc-400" aria-hidden="true">→</span>
-        </a>
-      </li>
-      <li class="reveal border-b border-zinc-200 dark:border-zinc-800">
-        <a href="blog-shopify-stores.html" class="row group grid grid-cols-[6.5rem_1fr_auto] items-baseline gap-4 py-4">
-          <time datetime="2026-09-22" class="text-sm text-zinc-500 dark:text-zinc-400">Sep 22, 2026</time>
-          <span class="font-medium">What I learned setting up Shopify stores for small businesses</span>
-          <span class="row-arrow text-zinc-400" aria-hidden="true">→</span>
-        </a>
-      </li>
-      <li class="reveal border-b border-zinc-200 dark:border-zinc-800">
-        <a href="blog-self-taught.html" class="row group grid grid-cols-[6.5rem_1fr_auto] items-baseline gap-4 py-4">
-          <time datetime="2026-08-30" class="text-sm text-zinc-500 dark:text-zinc-400">Aug 30, 2026</time>
-          <span class="font-medium">Teaching myself web development while still in school</span>
-          <span class="row-arrow text-zinc-400" aria-hidden="true">→</span>
-        </a>
-      </li>
-    </ul>
-    <a href="blog.html" class="reveal ul inline-block mt-6 text-sm font-medium">All articles →</a>
+  <div class="mt-10 grid md:grid-cols-3 gap-6">
+    <a href="blog-curship.html" class="group block">
+      <div class="overflow-hidden rounded-2xl aspect-[4/3] bg-zinc-200 dark:bg-zinc-900">
+        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80" alt="" loading="lazy" class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500">
+      </div>
+      <p class="mt-4 text-sm text-zinc-500 dark:text-zinc-400"><time datetime="2026-10-14">14 October 2026</time></p>
+      <h3 class="mt-1 font-display font-bold text-xl leading-snug group-hover:underline underline-offset-4 decoration-1">Building a shipping app for South African Shopify stores</h3>
+    </a>
+    <a href="blog-shopify-stores.html" class="group block">
+      <div class="overflow-hidden rounded-2xl aspect-[4/3] bg-zinc-200 dark:bg-zinc-900">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" alt="" loading="lazy" class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500">
+      </div>
+      <p class="mt-4 text-sm text-zinc-500 dark:text-zinc-400"><time datetime="2026-09-22">22 September 2026</time></p>
+      <h3 class="mt-1 font-display font-bold text-xl leading-snug group-hover:underline underline-offset-4 decoration-1">What I learned setting up Shopify stores for small businesses</h3>
+    </a>
+    <a href="blog-self-taught.html" class="group block">
+      <div class="overflow-hidden rounded-2xl aspect-[4/3] bg-zinc-200 dark:bg-zinc-900">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80" alt="" loading="lazy" class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-500">
+      </div>
+      <p class="mt-4 text-sm text-zinc-500 dark:text-zinc-400"><time datetime="2026-08-30">30 August 2026</time></p>
+      <h3 class="mt-1 font-display font-bold text-xl leading-snug group-hover:underline underline-offset-4 decoration-1">Teaching myself web development while still in school</h3>
+    </a>
   </div>
 </section>
 
 <!-- ═══ CONTACT ═══ -->
-<section id="contact" class="py-20 md:py-28 border-t border-zinc-200 dark:border-zinc-800">
-  <h2 class="reveal font-display font-bold text-4xl sm:text-5xl md:text-6xl tracking-tight leading-[1.08]">Let's work together.</h2>
-  <p class="reveal mt-5 text-lg text-zinc-500 dark:text-zinc-400 max-w-xl leading-relaxed">Need a Shopify store, a website or a web app? Tell me what you're building.</p>
-  <a href="mailto:LyrixcsMiles@gmail.com" class="reveal ul inline-block mt-8 font-display font-bold text-2xl sm:text-3xl break-all">LyrixcsMiles@gmail.com</a>
-  <ul class="reveal mt-10 flex flex-wrap gap-x-7 gap-y-2 text-sm" role="list">
-    <li><a href="https://www.linkedin.com/in/lyrixcsmiles-dev" target="_blank" rel="noopener noreferrer" class="ul text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">LinkedIn ↗</a></li>
-    <li><a href="https://github.com/Lyrixcs-Miles" target="_blank" rel="noopener noreferrer" class="ul text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">GitHub ↗</a></li>
-    <li><a href="./resources/downloads/Anotidaishe_Mazhindu_CV_v6.pdf" download class="ul text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">CV (PDF)</a></li>
-    <li><a href="./resources/downloads/Anotidaishe_Mazhindu_CV_v6.docx" download class="ul text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">CV (Word)</a></li>
-  </ul>
+<section id="contact" class="max-w-7xl mx-auto px-5 sm:px-8 pt-24 md:pt-32 pb-10">
+  <div class="on-dark relative overflow-hidden rounded-[28px] bg-chaos text-cloud ring-1 ring-wax px-6 sm:px-10 md:px-16 pt-14 md:pt-20 pb-10">
+    <!-- the palette, as a closing strip -->
+    <div class="absolute inset-x-0 top-0 flex h-2" aria-hidden="true">
+      <span class="flex-1 bg-chaos"></span><span class="flex-1 bg-wax"></span><span class="flex-1 bg-thunder"></span><span class="flex-1 bg-dull"></span><span class="flex-1 bg-spanish"></span><span class="flex-1 bg-dust"></span><span class="flex-1 bg-cloud"></span>
+    </div>
+    <h2 class="font-display font-bold tracking-[-0.035em] leading-[0.92] text-[clamp(2.75rem,7vw,6rem)]">
+      Got a store<br>to build?
+    </h2>
+    <p class="mt-6 text-spanish text-lg max-w-xl leading-relaxed">Tell me what you're selling or building. I'm available for freelance projects, contracts and development roles.</p>
+    <a href="mailto:LyrixcsMiles@gmail.com" class="mt-10 inline-block font-display font-bold text-[clamp(1.5rem,4vw,3rem)] tracking-tight underline underline-offset-[10px] decoration-2 decoration-thunder hover:decoration-cloud transition-colors break-all">LyrixcsMiles@gmail.com</a>
+    <div class="mt-14 pt-6 border-t border-wax flex flex-wrap gap-x-8 gap-y-3 text-sm text-spanish">
+      <a href="https://www.linkedin.com/in/lyrixcsmiles-dev" target="_blank" rel="noopener noreferrer" class="nl hover:text-cloud transition-colors">LinkedIn</a>
+      <a href="https://github.com/Lyrixcs-Miles" target="_blank" rel="noopener noreferrer" class="nl hover:text-cloud transition-colors">GitHub</a>
+      <a href="./resources/downloads/Anotidaishe_Mazhindu_CV_v6.pdf" download class="nl hover:text-cloud transition-colors">CV (PDF)</a>
+      <a href="./resources/downloads/Anotidaishe_Mazhindu_CV_v6.docx" download class="nl hover:text-cloud transition-colors">CV (Word)</a>
+      <span class="sm:ml-auto">Pretoria, South Africa</span>
+    </div>
+  </div>
 </section>
 
 </main>
 
-<footer class="border-t border-zinc-200 dark:border-zinc-800">
-  <div class="max-w-5xl mx-auto px-6 py-8 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-zinc-500 dark:text-zinc-400">
-    <p>© <span id="yr"></span> Richard Mazhindu</p>
-    <p>Developed by <a href="https://github.com/Lyrixcs-Miles/" target="_blank" rel="noopener noreferrer" class="ul">Lyrixcs Miles</a> &middot; Distributed by <a href="https://azhyre.co.za/" target="_blank" rel="noopener noreferrer" class="ul">AZHYRE</a></p>
-  </div>
+<footer class="max-w-7xl mx-auto px-5 sm:px-8 pb-10 flex flex-col sm:flex-row justify-between gap-2 text-xs text-zinc-500 dark:text-zinc-400">
+  <p>© <span id="yr"></span> Richard Mazhindu</p>
+  <p>Developed by <a href="https://github.com/Lyrixcs-Miles/" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2">Lyrixcs Miles</a>, distributed by <a href="https://azhyre.co.za/" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2">AZHYRE</a></p>
 </footer>
 
 <script>
 function app() {
   return {
     dark: false,
-    sc: false,
-    s: '',
+    mm: false,
+    open: 0,
+    hoverOpen: false,
+    canHover: window.matchMedia('(hover: hover) and (pointer: fine)').matches,
+    review: 0,
+
+    // Each project is one swatch from the palette, darkest first.
+    projects: [
+      { name: 'CurShip', kind: 'Shopify delivery app', year: '2025–2026', swatch: 'Chaos Black', hex: '#0F0F0F',
+        bg: 'bg-chaos', fg: 'text-cloud', btn: 'bg-cloud text-chaos',
+        img: 'resources/imgs/projects/curship.webp',
+        desc: 'A shipping app for South African Shopify stores: compare costs, book couriers and print labels without leaving Shopify. Tested in a development store and the courier’s sandbox, not yet launched.',
+        links: [{ label: 'Read the case study', href: 'case-study.html', primary: true }, { label: 'Try the demo', href: 'https://curship.vercel.app' }] },
+      { name: 'SerenQ', kind: 'Shopify store, client', year: '2025–2026', swatch: 'Shoe Wax', hex: '#2B2B2B',
+        bg: 'bg-wax', fg: 'text-cloud', btn: 'bg-cloud text-chaos',
+        img: 'resources/imgs/projects/serenq.webp',
+        desc: 'Designed and configured the storefront for a tallow skincare brand, including layout, store settings and products. I look after it with ongoing maintenance.',
+        links: [{ label: 'Visit serenq.co.za', href: 'https://serenq.co.za', primary: true }] },
+      { name: 'Paws & Play', kind: 'Shopify store, client', year: '2025–2026', swatch: 'Thunder', hex: '#4D4D4D',
+        bg: 'bg-thunder', fg: 'text-cloud', btn: 'bg-cloud text-chaos',
+        img: 'resources/imgs/projects/paws-and-play.webp',
+        desc: 'Designed and set up the Shopify storefront for a pet store, and support its ongoing maintenance.',
+        links: [{ label: 'Visit the store', href: 'https://paws.azhyre.co.za', primary: true }] },
+      { name: 'Azhyre Apparel', kind: 'Shopify store, own brand', year: '2025–2026', swatch: 'Dull', hex: '#717171',
+        bg: 'bg-dull', fg: 'text-white', btn: 'bg-white text-chaos',
+        img: 'resources/imgs/projects/azhyre-apparel.webp',
+        desc: 'The store for my own streetwear brand. I designed and configured it, and maintain the storefront, settings and products.',
+        links: [{ label: 'Visit azhyre.co.za', href: 'https://azhyre.co.za', primary: true }] },
+      { name: 'Blush&Bloom', kind: 'React storefront', year: '2026', swatch: 'Spanish Grey', hex: '#979797',
+        bg: 'bg-spanish', fg: 'text-chaos', btn: 'bg-chaos text-cloud',
+        img: 'resources/imgs/projects/blush-bloom.webp',
+        desc: 'A storefront for accessorised tumblers in four colours, with an animated collection page and a bag saved in the browser. Checkout isn’t connected yet.',
+        links: [{ label: 'Visit the site', href: 'https://bloom.azhyre.co.za', primary: true }] },
+      { name: 'Chioma', kind: 'Portfolio website, client', year: '2026', swatch: 'Dust to Dust', hex: '#BCBCBC',
+        bg: 'bg-dust', fg: 'text-chaos', btn: 'bg-chaos text-cloud',
+        img: 'resources/imgs/projects/chioma.webp',
+        desc: 'A portfolio site for a model and content creator working in fashion, beauty and lifestyle.',
+        links: [{ label: 'Visit the site', href: 'https://soma.azhyre.co.za', primary: true }] },
+      { name: 'AZHYRE Shower Heads', kind: 'Shopify store, own brand', year: '2026', swatch: 'Kingly Cloud', hex: '#DEDEDE',
+        bg: 'bg-cloud', fg: 'text-chaos', btn: 'bg-chaos text-cloud',
+        img: 'resources/imgs/projects/azhyre-shower-heads.webp',
+        desc: 'My own brand’s store for filtered shower heads and bundles: storefront, products and store settings.',
+        links: [{ label: 'Visit the store', href: 'https://azhyretech.co.za', primary: true }] },
+    ],
+
+    reviews: [
+      { name: 'Thandi Mokoena', role: 'SerenQ', initials: 'TM',
+        quote: 'Richard set up our Shopify store from the layout to the products, and he still looks after it for us. When something needs changing, it gets sorted quickly.' },
+      { name: 'Lerato Dlamini', role: 'Paws & Play', initials: 'LD',
+        quote: 'We came to Richard with a product list and an idea. He gave us a clean Shopify store that’s easy for us to run, and he helps whenever we need something updated.' },
+      { name: 'Sipho Nkosi', role: 'Website client', initials: 'SN',
+        quote: 'Richard built our website and explained each step along the way. He listened to what we wanted and delivered a site we’re proud to share with customers.' },
+    ],
 
     init() {
       this.dark = localStorage.getItem('theme') === 'dark' ||
         (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
       this.$watch('dark', v => localStorage.setItem('theme', v ? 'dark' : 'light'));
-
-      window.addEventListener('scroll', () => {
-        this.sc = window.scrollY > 10;
-        this.updateSection();
-      }, { passive: true });
-
-      const io = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
       document.getElementById('yr').textContent = new Date().getFullYear();
-    },
-
-    updateSection() {
-      const ids = ['contact', 'writing', 'reviews', 'about', 'services', 'work'];
-      for (const id of ids) {
-        const el = document.getElementById(id);
-        if (el && window.scrollY >= el.offsetTop - 120) { this.s = id; return; }
-      }
-      this.s = '';
     }
   }
 }
