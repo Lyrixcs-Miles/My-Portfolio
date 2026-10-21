@@ -14,8 +14,11 @@ https://portfolio.azhyre.co.za/
 ## 📄 Pages
 - `index.html` – Home page
 - `projects.html` – Project showcase
-- `case-study.html` – Detailed case study
-- `blog.html` / `blog-article.html` – Blog
+- `case-study.html` – CurShip case study
+- `blog.html` – Blog listing
+- `blog-curship.html`, `blog-shopify-stores.html`, `blog-self-taught.html` – Blog posts
+
+To add a project, add an entry to `allProjects` near the bottom of `projects.html`.
 
 ## 📌 About
-[1-2 sentences about you — who you are, what you're learning/building, what this site is for]
+Portfolio of Anotidaishe (Richard) Mazhindu, a web developer in Pretoria, South Africa, building Shopify stores, websites and web applications.

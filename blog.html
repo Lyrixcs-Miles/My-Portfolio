@@ -11,12 +11,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Arnold's blog — thoughts on UI/UX design, frontend development and freelancing."
+      content="Richard Mazhindu's blog: building Shopify stores, websites and web apps in South Africa."
     />
-    <meta name="author" content="Arnold" />
-    <meta property="og:title" content="Blog — Arnold" />
+    <meta name="author" content="Anotidaishe (Richard) Mazhindu" />
+    <meta property="og:title" content="Blog — Richard Mazhindu" />
     <meta property="og:type" content="website" />
-    <title>Blog — Arnold</title>
+    <title>Blog — Richard Mazhindu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script
       defer
@@ -96,13 +96,15 @@
         position: absolute;
         bottom: -2px;
         left: 0;
-        width: 0;
+        width: 100%;
         height: 1.5px;
         background: currentColor;
-        transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       }
       .nav-link:hover::after {
-        width: 100%;
+        transform: scaleX(1);
       }
       ::-webkit-scrollbar {
         width: 5px;
@@ -187,8 +189,8 @@
           class="font-display font-bold text-xl tracking-tight z-10"
           aria-label="Back to home"
         >
-          <span class="text-zinc-900 dark:text-white">Arn</span
-          ><span class="text-accent">old</span>
+          <span class="text-zinc-900 dark:text-white">Rich</span
+          ><span class="text-accent">ard</span>
         </a>
         <ul
           class="hidden md:flex items-center gap-8 text-sm font-medium"
@@ -407,44 +409,10 @@
           <p
             class="reveal reveal-delay-2 text-lg text-zinc-500 dark:text-zinc-400 max-w-xl leading-relaxed"
           >
-            Thoughts on UI/UX design, frontend development, and the realities of
-            full-time freelancing. No fluff.
+            Notes from building Shopify stores, websites and web apps, and from
+            teaching myself to code.
           </p>
 
-          <!-- Filter tags -->
-          <div
-            class="reveal reveal-delay-3 flex flex-wrap gap-2 mt-8"
-            x-data="{active:'all'}"
-          >
-            <button
-              @click="active='all'"
-              :class="active==='all'?'bg-accent text-white border-accent':'bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700 hover:border-accent'"
-              class="text-sm px-4 py-1.5 rounded-full border transition-colors"
-            >
-              All
-            </button>
-            <button
-              @click="active='design'"
-              :class="active==='design'?'bg-accent text-white border-accent':'bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700 hover:border-accent'"
-              class="text-sm px-4 py-1.5 rounded-full border transition-colors"
-            >
-              Design
-            </button>
-            <button
-              @click="active='dev'"
-              :class="active==='dev'?'bg-accent text-white border-accent':'bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700 hover:border-accent'"
-              class="text-sm px-4 py-1.5 rounded-full border transition-colors"
-            >
-              Dev
-            </button>
-            <button
-              @click="active='freelance'"
-              :class="active==='freelance'?'bg-accent text-white border-accent':'bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700 hover:border-accent'"
-              class="text-sm px-4 py-1.5 rounded-full border transition-colors"
-            >
-              Freelance
-            </button>
-          </div>
         </div>
       </section>
 
@@ -452,14 +420,14 @@
       <section class="pb-16">
         <div class="max-w-6xl mx-auto px-6">
           <a
-            href="blog-article.html"
+            href="blog-curship.html"
             class="reveal group block rounded-3xl overflow-hidden bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors"
           >
             <div class="grid md:grid-cols-2">
               <div class="photo-frame h-64 md:h-auto">
                 <img
                   src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=900&q=80"
-                  alt="Why I ditched CSS frameworks"
+                  alt="Code on a screen"
                   loading="lazy"
                 />
               </div>
@@ -467,25 +435,23 @@
                 <div class="flex items-center gap-3 mb-4">
                   <span
                     class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full"
-                    >Design</span
+                    >Dev</span
                   >
                   <span class="text-xs text-zinc-400"
-                    >March 8, 2025 · 7 min read</span
+                    >October 14, 2026 · 5 min read</span
                   >
                 </div>
                 <h2
                   class="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-white mb-4 group-hover:text-accent transition-colors"
                 >
-                  Why I ditched heavy CSS frameworks for Tailwind — and what
-                  changed
+                  Building a shipping app for South African Shopify stores
                 </h2>
                 <p
                   class="text-zinc-500 dark:text-zinc-400 leading-relaxed mb-6"
                 >
-                  After years of fighting specificity wars and unused kilobytes,
-                  here's what finally convinced me to make the switch — and the
-                  measurable impact it had on both my workflow and my clients'
-                  performance scores.
+                  Why I started CurShip, how it fits inside Shopify, what I
+                  learned working with a courier API, and what's left before it
+                  can launch.
                 </p>
                 <span
                   class="inline-flex items-center gap-1.5 text-sm font-medium text-accent nav-link"
@@ -500,14 +466,14 @@
       <!-- ALL ARTICLES GRID -->
       <section class="pb-24">
         <div class="max-w-6xl mx-auto px-6">
-          <div class="grid md:grid-cols-3 gap-6">
+          <div class="grid md:grid-cols-2 gap-6">
             <article
               class="reveal reveal-delay-1 card group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent"
             >
-              <div class="photo-frame w-full h-44">
+              <div class="photo-frame w-full h-52">
                 <img
-                  src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=700&q=80"
-                  alt="Design systems"
+                  src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&q=80"
+                  alt="Laptop showing an online store dashboard"
                   loading="lazy"
                 />
               </div>
@@ -515,25 +481,24 @@
                 <div class="flex items-center gap-3 mb-3">
                   <span
                     class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full"
-                    >Dev</span
+                    >Shopify</span
                   >
-                  <span class="text-xs text-zinc-400">Feb 21, 2025</span>
+                  <span class="text-xs text-zinc-400">Sep 22, 2026</span>
                 </div>
-                <a href="blog-article.html">
+                <a href="blog-shopify-stores.html">
                   <h3
                     class="font-display font-bold text-lg text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors"
                   >
-                    Building a design system from scratch in a weekend
+                    What I learned setting up Shopify stores for small businesses
                   </h3>
                 </a>
                 <p
                   class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4"
                 >
-                  Tokens, components, docs — the exact process I follow to spin
-                  up a coherent design system in 48 hours.
+                  Lessons from building SerenQ, Paws &amp; Play and my own Azhyre stores.
                 </p>
                 <a
-                  href="blog-article.html"
+                  href="blog-shopify-stores.html"
                   class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white nav-link"
                   >Read more →</a
                 >
@@ -543,10 +508,10 @@
             <article
               class="reveal reveal-delay-2 card group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent"
             >
-              <div class="photo-frame w-full h-44">
+              <div class="photo-frame w-full h-52">
                 <img
-                  src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=700&q=80"
-                  alt="Freelance lessons"
+                  src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900&q=80"
+                  alt="Laptop on a desk with code"
                   loading="lazy"
                 />
               </div>
@@ -554,231 +519,30 @@
                 <div class="flex items-center gap-3 mb-3">
                   <span
                     class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full"
-                    >Freelance</span
+                    >Journey</span
                   >
-                  <span class="text-xs text-zinc-400">Jan 14, 2025</span>
+                  <span class="text-xs text-zinc-400">Aug 30, 2026</span>
                 </div>
-                <a href="blog-article.html">
+                <a href="blog-self-taught.html">
                   <h3
                     class="font-display font-bold text-lg text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors"
                   >
-                    5 lessons from my first year of full-time freelancing
+                    Teaching myself web development while still in school
                   </h3>
                 </a>
                 <p
                   class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4"
                 >
-                  Contracts, pricing, scope creep, burnout — the things nobody
-                  tells you before you go solo.
+                  How I learned to code in high school and turned it into client work after matric.
                 </p>
                 <a
-                  href="blog-article.html"
-                  class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white nav-link"
-                  >Read more →</a
-                >
-              </div>
-            </article>
-
-            <article
-              class="reveal reveal-delay-3 card group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent"
-            >
-              <div class="photo-frame w-full h-44">
-                <img
-                  src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=700&q=80"
-                  alt="Alpine.js article"
-                  loading="lazy"
-                />
-              </div>
-              <div class="p-6">
-                <div class="flex items-center gap-3 mb-3">
-                  <span
-                    class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full"
-                    >Dev</span
-                  >
-                  <span class="text-xs text-zinc-400">Dec 3, 2024</span>
-                </div>
-                <a href="blog-article.html">
-                  <h3
-                    class="font-display font-bold text-lg text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors"
-                  >
-                    Alpine.js is the jQuery of the modern era — and that's a
-                    compliment
-                  </h3>
-                </a>
-                <p
-                  class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4"
-                >
-                  No build step, no virtual DOM, no config hell. Just sprinkle
-                  some behaviour and ship.
-                </p>
-                <a
-                  href="blog-article.html"
-                  class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white nav-link"
-                  >Read more →</a
-                >
-              </div>
-            </article>
-
-            <article
-              class="reveal reveal-delay-1 card group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent"
-            >
-              <div class="photo-frame w-full h-44">
-                <img
-                  src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=700&q=80"
-                  alt="UX laws article"
-                  loading="lazy"
-                />
-              </div>
-              <div class="p-6">
-                <div class="flex items-center gap-3 mb-3">
-                  <span
-                    class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full"
-                    >Design</span
-                  >
-                  <span class="text-xs text-zinc-400">Nov 18, 2024</span>
-                </div>
-                <a href="blog-article.html">
-                  <h3
-                    class="font-display font-bold text-lg text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors"
-                  >
-                    The 7 UX laws every frontend dev should memorise
-                  </h3>
-                </a>
-                <p
-                  class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4"
-                >
-                  Fitts's Law, Hick's Law, Jakob's Law — the cognitive science
-                  behind every good interface decision.
-                </p>
-                <a
-                  href="blog-article.html"
-                  class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white nav-link"
-                  >Read more →</a
-                >
-              </div>
-            </article>
-
-            <article
-              class="reveal reveal-delay-2 card group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent"
-            >
-              <div class="photo-frame w-full h-44">
-                <img
-                  src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=700&q=80"
-                  alt="Client management"
-                  loading="lazy"
-                />
-              </div>
-              <div class="p-6">
-                <div class="flex items-center gap-3 mb-3">
-                  <span
-                    class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full"
-                    >Freelance</span
-                  >
-                  <span class="text-xs text-zinc-400">Oct 30, 2024</span>
-                </div>
-                <a href="blog-article.html">
-                  <h3
-                    class="font-display font-bold text-lg text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors"
-                  >
-                    How I manage 3 client projects at once without losing my
-                    mind
-                  </h3>
-                </a>
-                <p
-                  class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4"
-                >
-                  My exact Notion setup, communication rhythms, and the one rule
-                  I never break.
-                </p>
-                <a
-                  href="blog-article.html"
-                  class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white nav-link"
-                  >Read more →</a
-                >
-              </div>
-            </article>
-
-            <article
-              class="reveal reveal-delay-3 card group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:border-accent"
-            >
-              <div class="photo-frame w-full h-44">
-                <img
-                  src="https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=700&q=80"
-                  alt="Dark mode article"
-                  loading="lazy"
-                />
-              </div>
-              <div class="p-6">
-                <div class="flex items-center gap-3 mb-3">
-                  <span
-                    class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full"
-                    >Dev</span
-                  >
-                  <span class="text-xs text-zinc-400">Oct 5, 2024</span>
-                </div>
-                <a href="blog-article.html">
-                  <h3
-                    class="font-display font-bold text-lg text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors"
-                  >
-                    Dark mode done right: beyond just inverting colours
-                  </h3>
-                </a>
-                <p
-                  class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4"
-                >
-                  Contrast ratios, elevation, shadows — what most dark mode
-                  implementations get completely wrong.
-                </p>
-                <a
-                  href="blog-article.html"
+                  href="blog-self-taught.html"
                   class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white nav-link"
                   >Read more →</a
                 >
               </div>
             </article>
           </div>
-
-          <!-- Pagination -->
-          <nav
-            class="reveal flex items-center justify-center gap-2 mt-14"
-            aria-label="Pagination"
-          >
-            <span
-              class="w-9 h-9 flex items-center justify-center rounded-full bg-accent text-white text-sm font-medium"
-              >1</span
-            >
-            <a
-              href="#"
-              class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:border-accent hover:text-accent transition-colors text-sm"
-              >2</a
-            >
-            <a
-              href="#"
-              class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:border-accent hover:text-accent transition-colors text-sm"
-              >3</a
-            >
-            <span class="text-zinc-400 text-sm px-1">…</span>
-            <a
-              href="#"
-              class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:border-accent hover:text-accent transition-colors text-sm"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </a>
-          </nav>
         </div>
       </section>
     </main>
@@ -788,7 +552,7 @@
         class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4"
       >
         <p class="text-sm text-zinc-400">
-          © <span id="yr"></span> Arnold. All rights reserved. <br />
+          © <span id="yr"></span> Richard Mazhindu. All rights reserved. <br />
           Developed by
           <a
             href="https://github.com/Lyrixcs-Miles/"
