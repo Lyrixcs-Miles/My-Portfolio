@@ -1,645 +1,245 @@
-<!doctype html>
-<html
-  lang="en"
-  x-data="projects()"
-  :class="{'dark':dark}"
-  x-init="init()"
-  class="scroll-smooth"
->
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Projects — Richard Mazhindu</title>
-    <meta name="description" content="Projects by Anotidaishe (Richard) Mazhindu: Shopify stores, websites and web applications." />
-    <meta name="author" content="Anotidaishe (Richard) Mazhindu" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
-    ></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap"
-      rel="stylesheet"
-    />
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            fontFamily: {
-              display: ["PT Sans", "sans-serif"],
-              body: ["DM Sans", "sans-serif"],
-            },
-            colors: { accent: "rgb(var(--accent) / <alpha-value>)", "accent-light": "rgb(var(--accent-light) / <alpha-value>)", "on-accent": "rgb(var(--on-accent) / <alpha-value>)" },
-          },
-        },
-      };
-    </script>
-    <style>
-/* Monochrome palette: the accent flips with the theme. */
-:root{--accent:15 15 15;--accent-light:77 77 77;--on-accent:255 255 255}
-.dark,.on-dark{--accent:222 222 222;--accent-light:188 188 188;--on-accent:15 15 15}
+<!DOCTYPE html>
+<html lang="en" x-data="projects()" :class="{'dark':dark}" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Projects by Anotidaishe (Richard) Mazhindu: Shopify stores, websites and web applications.">
+<meta name="author" content="Anotidaishe (Richard) Mazhindu">
+<meta property="og:title" content="Projects — Richard Mazhindu">
+<meta property="og:description" content="Projects by Anotidaishe (Richard) Mazhindu: Shopify stores, websites and web applications.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://portfolio.azhyre.co.za/projects.html">
+<title>Projects — Richard Mazhindu</title>
 
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
-      html {
-        font-family: "DM Sans", sans-serif;
-      }
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        font-family: "PT Sans", sans-serif;
-      }
-      .reveal {
-        opacity: 0;
-        transform: translateY(22px);
-        transition:
-          opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1),
-          transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      .reveal.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .nav-link {
-        position: relative;
-      }
-      .nav-link::after {
-        content: "";
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        width: 100%;
-        height: 1.5px;
-        background: currentColor;
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      .nav-link:hover::after {
-        transform: scaleX(1);
-      }
-      ::-webkit-scrollbar {
-        width: 5px;
-      }
-      ::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: rgb(var(--accent));
-        border-radius: 99px;
-      }
-      body {
-        transition:
-          background-color 0.3s,
-          color 0.3s;
-      }
-      body::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-        pointer-events: none;
-        z-index: 0;
-        opacity: 0.4;
-      }
-      .btn-primary {
-        position: relative;
-        overflow: hidden;
-      }
-      .btn-primary::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 60%;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.18);
-        transform: skewX(-20deg);
-        transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      .btn-primary:hover::after {
-        left: 160%;
-      }
-      [x-cloak] {
-        display: none !important;
-      }
-      .photo-frame {
-        position: relative;
-        overflow: hidden;
-        background: #e4e4e7;
-      }
-      .photo-frame img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-      .project-card {
-        transition:
-          transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-          border-color 0.2s;
-      }
-      .project-card:hover {
-        transform: translateY(-4px);
-      }
-    </style>
-  </head>
-  <body
-    class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-body antialiased"
-  >
-    <header
-      class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-      :class="scrolled?'bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm shadow-black/5':'bg-transparent'"
-    >
-      <nav
-        class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between"
-      >
-        <a
-          href="index.html"
-          class="font-display font-bold text-xl tracking-tight z-10"
-        >
-          <span class="text-zinc-900 dark:text-white">Rich</span
-          ><span class="text-accent">ard</span>
-        </a>
-        <ul class="hidden md:flex items-center gap-8 text-sm font-medium">
-          <li>
-            <a
-              href="index.html#services"
-              class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
-              >Services</a
-            >
-          </li>
-          <li>
-            <a href="projects.html" class="nav-link text-accent font-medium"
-              >Work</a
-            >
-          </li>
-          <li>
-            <a
-              href="index.html#about"
-              class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
-              >About</a
-            >
-          </li>
-          <li>
-            <a
-              href="blog.html"
-              class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
-              >Blog</a
-            >
-          </li>
-          <li>
-            <a
-              href="index.html#contact"
-              class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
-              >Contact</a
-            >
-          </li>
-        </ul>
-        <div class="flex items-center gap-3">
-          <button
-            @click="dark=!dark;localStorage.setItem('theme',dark?'dark':'light')"
-            class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-            :aria-label="dark?'Light mode':'Dark mode'"
-          >
-            <svg
-              x-show="!dark"
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"
-              />
-            </svg>
-            <svg
-              x-show="dark"
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"
-              />
-            </svg>
-          </button>
-          <a
-            href="index.html#contact"
-            class="hidden md:inline-flex items-center gap-2 btn-primary bg-accent text-on-accent text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors"
-            >Hire me &rarr;</a
-          >
-          <button
-            @click="mobileMenu=!mobileMenu"
-            class="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800"
-            aria-label="Toggle menu"
-          >
-            <svg
-              x-show="!mobileMenu"
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-            <svg
-              x-show="mobileMenu"
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-      </nav>
-      <div
-        x-show="mobileMenu"
-        x-cloak
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0 -translate-y-2"
-        x-transition:enter-end="opacity-100 translate-y-0"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100 translate-y-0"
-        x-transition:leave-end="opacity-0 -translate-y-2"
-        class="md:hidden bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-900"
-      >
-        <ul class="flex flex-col px-6 py-4 gap-4 text-sm font-medium">
-          <li>
-            <a
-              href="index.html#services"
-              @click="mobileMenu=false"
-              class="block text-zinc-700 dark:text-zinc-300"
-              >Services</a
-            >
-          </li>
-          <li>
-            <a href="projects.html" class="block text-accent font-medium"
-              >Work</a
-            >
-          </li>
-          <li>
-            <a
-              href="index.html#about"
-              @click="mobileMenu=false"
-              class="block text-zinc-700 dark:text-zinc-300"
-              >About</a
-            >
-          </li>
-          <li>
-            <a
-              href="blog.html"
-              @click="mobileMenu=false"
-              class="block text-zinc-700 dark:text-zinc-300"
-              >Blog</a
-            >
-          </li>
-          <li>
-            <a
-              href="index.html#contact"
-              @click="mobileMenu=false"
-              class="block text-zinc-700 dark:text-zinc-300"
-              >Contact</a
-            >
-          </li>
-        </ul>
-      </div>
-    </header>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="./resources/js/theme.js"></script>
+<script src="./resources/js/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./resources/css/site.css">
+<style>
+.mat-shot{transform:rotate(-1.5deg);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.group:hover .mat-shot{transform:rotate(0deg) scale(1.02)}
+</style>
+</head>
 
-    <main>
-      <section class="pt-36 pb-12 relative overflow-hidden">
-        <div
-          class="absolute top-0 right-0 w-80 h-80 bg-accent/10 rounded-full blur-3xl pointer-events-none"
-        ></div>
-        <div class="max-w-6xl mx-auto px-6 relative z-10">
-          <p
-            class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3"
-          >
-            Portfolio
-          </p>
-          <h1
-            class="reveal font-display font-bold text-5xl md:text-6xl text-zinc-900 dark:text-white leading-tight mb-4"
-          >
-            All Projects
-          </h1>
-          <p
-            class="reveal text-lg text-zinc-500 dark:text-zinc-400 max-w-xl leading-relaxed mb-8"
-          >
-            Shopify stores, websites and web apps I've built for clients and for
-            my own brands.
-          </p>
-          <div class="reveal flex flex-wrap gap-2">
-            <template x-for="f in filterOptions" :key="f.value">
-              <button
-                @click="filter = f.value"
-                :class="filter === f.value ? 'bg-accent text-on-accent border-accent' : 'bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700 hover:border-accent'"
-                class="text-sm px-4 py-1.5 rounded-full border transition-colors"
-                x-text="f.label"
-              ></button>
+<body class="bg-paper dark:bg-ink text-chaos dark:text-cloud antialiased overflow-x-hidden">
+
+<!-- ═══ NAV ═══ -->
+<header class="sticky top-0 z-50 bg-paper/85 dark:bg-ink/85 backdrop-blur-md">
+  <nav class="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between gap-6" aria-label="Main navigation">
+    <a href="index.html" class="group flex items-center gap-2.5 font-display font-bold text-lg tracking-tight">
+      <span class="flex h-5 w-5 overflow-hidden rounded-[5px] transition-transform duration-500 group-hover:rotate-90" aria-hidden="true">
+        <span class="flex-1 bg-violet"></span><span class="flex-1 bg-petal"></span><span class="flex-1 bg-sun"></span>
+      </span>
+      Richard Mazhindu
+    </a>
+
+    <ul class="hidden md:flex items-center gap-8 text-sm" role="list">
+      <li><a href="projects.html" class="nl text-chaos dark:text-white font-medium" aria-current="page">Work</a></li>
+      <li><a href="case-study.html" class="nl text-muted dark:text-muted-dark hover:text-violet dark:hover:text-sun transition-colors">Case study</a></li>
+      <li><a href="blog.html" class="nl text-muted dark:text-muted-dark hover:text-violet dark:hover:text-sun transition-colors">Blog</a></li>
+      <li><a href="index.html#about" class="nl text-muted dark:text-muted-dark hover:text-violet dark:hover:text-sun transition-colors">About</a></li>
+    </ul>
+
+    <div class="flex items-center gap-2">
+      <button @click="dark=!dark" class="w-9 h-9 flex items-center justify-center rounded-full border border-line dark:border-white/10 hover:bg-mist dark:hover:bg-white/5 transition-colors" :aria-label="dark?'Switch to light mode':'Switch to dark mode'">
+        <svg x-show="!dark" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        <svg x-show="dark" x-cloak class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+      </button>
+      <a href="#contact" class="hidden sm:inline-flex items-center bg-sun text-ink text-sm font-medium px-5 py-2 rounded-full hover:bg-[#F6D9C8] hover:-translate-y-0.5 transition">Hire me</a>
+      <button @click="mm=!mm" class="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-line dark:border-white/10" :aria-expanded="mm" aria-label="Menu">
+        <svg x-show="!mm" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg x-show="mm" x-cloak class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </nav>
+  <div x-show="mm" x-cloak x-transition.opacity class="md:hidden border-t border-line dark:border-white/10 bg-paper dark:bg-ink">
+    <ul class="max-w-7xl mx-auto px-5 py-4 grid grid-cols-2 gap-3 text-base" role="list">
+      <li><a href="projects.html" class="block py-1 font-medium text-violet dark:text-sun">Work</a></li>
+      <li><a href="case-study.html" class="block py-1">Case study</a></li>
+      <li><a href="blog.html" class="block py-1">Blog</a></li>
+      <li><a href="index.html#about" class="block py-1">About</a></li>
+      <li><a href="#contact" @click="mm=false" class="block py-1 font-medium">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+
+<!-- ═══ INTRO ═══ -->
+<section class="max-w-7xl mx-auto px-5 sm:px-8 pt-12 md:pt-20 pb-10 md:pb-14">
+  <h1 class="font-display font-bold tracking-[-0.035em] leading-[0.92] text-[clamp(2.75rem,7.5vw,6.5rem)]">
+    <span class="line"><span style="animation-delay:.05s">Stores, sites</span></span>
+    <span class="line"><span style="animation-delay:.17s"><span class="stroke-text">&amp;</span> apps I've built.</span></span>
+  </h1>
+  <div class="fade-in mt-8 flex flex-col lg:flex-row lg:items-end justify-between gap-8" style="animation-delay:.35s">
+    <p class="max-w-xl text-lg text-muted dark:text-muted-dark leading-relaxed">
+      Shopify stores, websites and web apps for clients and for my own brands. Each one sits on a shade of the palette; cards with a screenshot open a full-page view.
+    </p>
+    <div class="flex flex-wrap gap-2" role="group" aria-label="Filter projects">
+      <template x-for="f in filterOptions" :key="f.value">
+        <button type="button" @click="filter = f.value" :aria-pressed="filter === f.value"
+          class="inline-flex items-center gap-2 text-sm font-medium pl-4 pr-1.5 py-1.5 rounded-full border transition-colors"
+          :class="filter === f.value ? 'bg-violet text-white border-violet dark:bg-sun dark:text-ink dark:border-sun' : 'border-line-strong dark:border-white/15 hover:border-jaca dark:hover:border-lilac'">
+          <span x-text="f.label"></span>
+          <span class="min-w-[1.6rem] h-6 px-1.5 rounded-full text-xs flex items-center justify-center tabular-nums"
+            :class="filter === f.value ? 'bg-white/20 dark:bg-ink/15' : 'bg-mist text-violet dark:bg-white/10 dark:text-lilac'" x-text="count(f.value)"></span>
+        </button>
+      </template>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ GRID ═══ -->
+<section class="max-w-7xl mx-auto px-5 sm:px-8">
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <template x-for="(p, i) in allProjects" :key="p.id">
+      <div x-show="filter === 'all' || p.category === filter"
+        x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-3" x-transition:enter-end="opacity-100 translate-y-0">
+        <article class="group h-full flex flex-col rounded-[26px] overflow-hidden bg-white dark:bg-white/[.04] ring-1 ring-line dark:ring-white/10 hover:-translate-y-1 hover:shadow-[0_30px_60px_-30px_rgba(46,38,64,.55)] transition duration-300">
+          <a :href="p.url || null" :target="p.external ? '_blank' : null" :rel="p.external ? 'noopener noreferrer' : null"
+            @click="if (p.gallery) { $event.preventDefault(); openGallery(p) }"
+            :aria-label="p.gallery ? 'View ' + p.name + ' pages' : null"
+            class="relative block aspect-[16/11] p-4 sm:p-5" :class="mat(i)">
+            <template x-if="p.img">
+              <span class="mat-shot block h-full rounded-xl overflow-hidden shadow-xl shadow-black/30 bg-black/10">
+                <img :src="p.img" :alt="'Screenshot of ' + p.name" loading="lazy" class="w-full h-full object-cover object-top">
+              </span>
             </template>
-          </div>
-        </div>
-      </section>
-
-      <section class="pb-24">
-        <div class="max-w-6xl mx-auto px-6">
-          <!--
-          CORRECTIF : on itere sur TOUS les projets, x-show + x-transition gerent
-          la visibilite de chaque carte. L'ancienne version utilisait x-for sur
-          filteredProjects (computed), ce qui forcait un re-render complet du DOM
-          a chaque changement de filtre — detruisant les classes .reveal et cachant
-          tout le contenu.
-        -->
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <template x-for="p in allProjects" :key="p.id">
-              <div
-                x-show="filter === 'all' || p.category === filter"
-                x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0 scale-95 translate-y-2"
-                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-                x-transition:leave="transition ease-in duration-200"
-                x-transition:leave-start="opacity-100 scale-100"
-                x-transition:leave-end="opacity-0 scale-95"
-              >
-                <article
-                  class="project-card group h-full rounded-2xl overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-accent transition-colors"
-                >
-                  <a
-                    :href="p.url || null"
-                    :target="p.external ? '_blank' : null"
-                    :rel="p.external ? 'noopener noreferrer' : null"
-                    @click="if (p.gallery) { $event.preventDefault(); openGallery(p) }"
-                    :aria-label="p.gallery ? 'View ' + p.name + ' colourways' : null"
-                    class="relative flex items-center justify-center w-full h-52 bg-gradient-to-br px-6 text-center overflow-hidden"
-                    :class="p.panel"
-                  >
-                    <template x-if="p.img">
-                      <img
-                        :src="p.img"
-                        :alt="'Screenshot of ' + p.name"
-                        loading="lazy"
-                        class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
-                      />
-                    </template>
-                    <span
-                      x-show="!p.img"
-                      class="font-display font-bold text-4xl text-zinc-900/80 dark:text-white/90"
-                      :class="p.category === 'app' ? '!text-white/90' : ''"
-                      x-text="p.name"
-                    ></span>
-                  </a>
-                  <div class="p-6">
-                    <div class="flex flex-wrap gap-2 mb-3">
-                      <template x-for="tag in p.tags" :key="tag">
-                        <span
-                          class="text-xs px-2.5 py-1 rounded-full"
-                          :class="tag === p.categoryLabel ? 'bg-accent text-on-accent border border-transparent' : 'border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300'"
-                          x-text="tag"
-                        ></span>
-                      </template>
-                    </div>
-                    <a
-                      :href="p.url || null"
-                      :target="p.external ? '_blank' : null"
-                      :rel="p.external ? 'noopener noreferrer' : null"
-                    >
-                      <h3
-                        class="font-display font-bold text-lg text-zinc-900 dark:text-white mb-2 group-hover:text-accent transition-colors"
-                        x-text="p.title"
-                      ></h3>
-                    </a>
-                    <p
-                      class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4"
-                      x-text="p.desc"
-                    ></p>
-                    <div class="flex items-center justify-between gap-3">
-                      <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
-                      <a
-                        x-show="p.url"
-                        :href="p.url"
-                        :target="p.external ? '_blank' : null"
-                        :rel="p.external ? 'noopener noreferrer' : null"
-                        class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white nav-link"
-                        x-text="p.linkLabel"
-                      ></a>
-                      <span
-                        x-show="!p.url"
-                        class="text-sm text-zinc-400"
-                        x-text="p.linkLabel"
-                      ></span>
-                      <button
-                        x-show="p.gallery"
-                        type="button"
-                        @click="openGallery(p)"
-                        class="text-sm font-medium text-accent nav-link"
-                        x-text="p.gallery && p.gallery.length > 1 ? 'Colourways' : 'Full page'"
-                      ></button>
-                      </div>
-                      <span
-                        class="text-xs text-zinc-400"
-                        x-text="p.year"
-                      ></span>
-                    </div>
-                  </div>
-                </article>
-              </div>
+            <template x-if="!p.img">
+              <span class="flex h-full flex-col justify-between">
+                <span class="text-xs opacity-70" x-text="p.year"></span>
+                <span class="font-display font-bold text-4xl sm:text-5xl leading-[0.95] tracking-tight" x-text="p.name"></span>
+              </span>
             </template>
-          </div>
-          <div x-show="visibleCount === 0" x-cloak class="text-center py-20">
-            <p class="text-zinc-400 text-sm">
-              No projects in this category yet.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section class="pb-24">
-        <div class="max-w-6xl mx-auto px-6">
-          <div
-            class="on-dark bg-zinc-900 dark:bg-zinc-800 rounded-3xl p-10 md:p-14 text-center relative overflow-hidden"
-          >
-            <div
-              class="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl pointer-events-none"
-            ></div>
-            <div
-              class="absolute bottom-0 left-0 w-40 h-40 bg-accent/10 rounded-full blur-2xl pointer-events-none"
-            ></div>
-            <div class="relative z-10">
-              <p
-                class="text-xs font-medium text-accent tracking-widest uppercase mb-4"
-              >
-                Ready to start?
-              </p>
-              <h2
-                class="font-display font-bold text-3xl md:text-4xl text-white mb-4"
-              >
-                Want your project here?
-              </h2>
-              <p class="text-zinc-400 max-w-md mx-auto mb-8">
-                I'm available for new projects. Tell me about what you're
-                building and let's see if we're a good fit.
-              </p>
-              <a
-                href="index.html#contact"
-                class="inline-flex items-center gap-2 btn-primary bg-accent text-on-accent font-medium px-8 py-3.5 rounded-full hover:bg-accent-light transition-colors"
-                >Start a project &rarr;</a
-              >
+            <template x-if="p.gallery">
+              <span class="absolute right-3 top-3 rounded-full bg-white/90 text-ink text-xs font-medium px-3 py-1 shadow"
+                x-text="p.gallery.length > 1 ? p.gallery.length + ' colourways' : 'Full page'"></span>
+            </template>
+          </a>
+          <div class="p-6 flex flex-col flex-1">
+            <div class="flex items-baseline justify-between gap-4">
+              <h2 class="font-display font-bold text-xl leading-snug" x-text="p.title"></h2>
+              <span class="text-xs text-muted dark:text-muted-dark shrink-0 tabular-nums" x-text="p.year"></span>
             </div>
-          </div>
-        </div>
-      </section>
-      <!-- Colourway gallery -->
-      <div
-        x-show="gallery"
-        x-cloak
-        x-transition.opacity.duration.200ms
-        @keydown.escape.window="closeGallery()"
-        class="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
-        @click.self="closeGallery()"
-        role="dialog"
-        aria-modal="true"
-        :aria-label="gallery ? gallery.name + ' colourways' : null"
-      >
-        <div
-          class="w-full max-w-3xl max-h-[90vh] flex flex-col bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-2xl"
-        >
-          <div
-            class="flex flex-wrap items-center justify-between gap-3 px-5 py-4 border-b border-zinc-100 dark:border-zinc-800"
-          >
-            <div>
-              <p
-                class="font-display font-bold text-lg text-zinc-900 dark:text-white"
-                x-text="gallery ? gallery.name + ' — ' + (gallery.galleryTitle || 'product page') : ''"
-              ></p>
-              <p
-                class="text-xs text-zinc-500 dark:text-zinc-400"
-                x-text="gallery ? gallery.gallery[galleryIdx].label : ''"
-              ></p>
-            </div>
-            <div class="flex items-center gap-2">
-              <template x-for="(c, i) in (gallery && gallery.gallery.length > 1 ? gallery.gallery : [])" :key="c.label">
-                <button
-                  type="button"
-                  @click="galleryIdx = i; $refs.galleryScroll.scrollTop = 0"
-                  class="w-8 h-8 rounded-full border-2 transition-colors"
-                  :class="galleryIdx === i ? 'border-accent' : 'border-zinc-200 dark:border-zinc-700'"
-                  :style="`background:${c.swatch}`"
-                  :aria-label="c.label"
-                  :aria-pressed="galleryIdx === i"
-                ></button>
+            <div class="mt-3 flex flex-wrap gap-1.5">
+              <template x-for="tag in p.tags" :key="tag">
+                <span class="text-xs px-2.5 py-0.5 rounded-full" :class="tag === p.categoryLabel ? 'bg-violet text-white dark:bg-sun dark:text-ink' : 'border border-line-strong dark:border-white/15'" x-text="tag"></span>
               </template>
-              <button
-                type="button"
-                @click="closeGallery()"
-                class="ml-2 w-8 h-8 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-700 text-zinc-500 hover:text-accent hover:border-accent transition-colors"
-                aria-label="Close"
-              >
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+            </div>
+            <p class="mt-4 text-sm text-muted dark:text-muted-dark leading-relaxed" x-text="p.desc"></p>
+            <div class="mt-auto pt-6 flex flex-wrap items-center gap-2">
+              <template x-if="p.url">
+                <a :href="p.url" :target="p.external ? '_blank' : null" :rel="p.external ? 'noopener noreferrer' : null"
+                  class="inline-flex items-center bg-sun text-ink text-sm font-medium px-4 py-2 rounded-full hover:bg-[#F6D9C8] hover:-translate-y-0.5 transition" x-text="p.linkLabel"></a>
+              </template>
+              <template x-if="!p.url">
+                <span class="text-sm text-muted dark:text-muted-dark px-1" x-text="p.linkLabel"></span>
+              </template>
+              <template x-if="p.gallery">
+                <button type="button" @click="openGallery(p)"
+                  class="inline-flex items-center text-sm font-medium px-4 py-2 rounded-full border border-line-strong dark:border-white/15 hover:border-jaca dark:hover:border-lilac transition-colors"
+                  x-text="p.gallery.length > 1 ? 'Colourways' : 'Full page'"></button>
+              </template>
             </div>
           </div>
-          <div x-ref="galleryScroll" class="overflow-y-auto">
-            <template x-if="gallery">
-              <img
-                :src="gallery.gallery[galleryIdx].img"
-                :alt="gallery.name + ' product page in ' + gallery.gallery[galleryIdx].label"
-                class="block w-full h-auto"
-              />
-            </template>
-          </div>
-          <div
-            class="flex items-center justify-between gap-3 px-5 py-3 border-t border-zinc-100 dark:border-zinc-800 text-xs text-zinc-500 dark:text-zinc-400"
-          >
-            <span>Scroll to see the full page.</span>
-            <a
-              x-show="gallery && gallery.url"
-              :href="gallery ? gallery.url : null"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="font-medium text-accent nav-link"
-              >Visit live site ↗</a
-            >
-          </div>
-        </div>
+        </article>
       </div>
-    </main>
+    </template>
+  </div>
+  <p x-show="visibleCount === 0" x-cloak class="py-20 text-center text-muted dark:text-muted-dark">Nothing in this category yet. Pick another filter above.</p>
+</section>
 
-    <footer class="border-t border-zinc-100 dark:border-zinc-900">
-      <div
-        class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4"
-      >
-        <p class="text-sm text-zinc-400">
-          &copy; <span id="year"></span> Richard Mazhindu. All rights reserved.
-        </p>
-        <p class="text-xs text-zinc-500">
-          Built with Tailwind CSS &amp; Alpine.js
-        </p>
+<!-- ═══ GALLERY ═══ -->
+<div x-show="gallery" x-cloak x-transition.opacity.duration.200ms @keydown.escape.window="closeGallery()" @click.self="closeGallery()"
+  class="fixed inset-0 z-[80] flex items-center justify-center bg-ink/80 backdrop-blur-sm p-4" role="dialog" aria-modal="true" :aria-label="gallery ? gallery.name + ' pages' : null">
+  <div class="w-full max-w-3xl max-h-[90vh] flex flex-col bg-paper dark:bg-ink rounded-[24px] overflow-hidden ring-1 ring-line dark:ring-white/10 shadow-2xl">
+    <div class="flex flex-wrap items-center justify-between gap-3 px-5 py-4 border-b border-line dark:border-white/10">
+      <div>
+        <p class="font-display font-bold text-lg" x-text="gallery ? gallery.name + ' — ' + (gallery.galleryTitle || 'product page') : ''"></p>
+        <p class="text-xs text-muted dark:text-muted-dark" x-text="gallery ? gallery.gallery[galleryIdx].label : ''"></p>
       </div>
-    </footer>
+      <div class="flex items-center gap-2">
+        <template x-for="(c, k) in (gallery && gallery.gallery.length > 1 ? gallery.gallery : [])" :key="c.label">
+          <button type="button" @click="galleryIdx = k; $refs.galleryScroll.scrollTop = 0" class="w-8 h-8 rounded-full border-2 transition-transform hover:scale-110"
+            :class="galleryIdx === k ? 'border-violet dark:border-sun scale-110' : 'border-line dark:border-white/15'" :style="{ background: c.swatch }"
+            :aria-label="c.label" :aria-pressed="galleryIdx === k"></button>
+        </template>
+        <button type="button" @click="closeGallery()" class="ml-2 w-8 h-8 flex items-center justify-center rounded-full border border-line dark:border-white/15 hover:border-jaca transition-colors" aria-label="Close">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+    <div x-ref="galleryScroll" class="overflow-y-auto">
+      <template x-if="gallery">
+        <img :src="gallery.gallery[galleryIdx].img" :alt="gallery.name + ', ' + gallery.gallery[galleryIdx].label" class="block w-full h-auto">
+      </template>
+    </div>
+    <div class="flex items-center justify-between gap-3 px-5 py-3 border-t border-line dark:border-white/10 text-xs text-muted dark:text-muted-dark">
+      <span>Scroll to see the whole page.</span>
+      <a x-show="gallery && gallery.url" :href="gallery ? gallery.url : null" target="_blank" rel="noopener noreferrer" class="nl font-medium text-violet dark:text-sun">Visit the live site</a>
+    </div>
+  </div>
+</div>
 
-    <script>
-      function projects() {
-        return {
-          dark: false,
-          scrolled: false,
-          mobileMenu: false,
-          filter: "all",
-          gallery: null,
-          galleryIdx: 0,
+<!-- ═══ CONTACT ═══ -->
+<section id="contact" class="max-w-7xl mx-auto px-5 sm:px-8 pt-24 md:pt-32 pb-10">
+  <div class="on-dark relative overflow-hidden rounded-[28px] bg-night text-cloud ring-1 ring-violet px-6 sm:px-10 md:px-16 pt-14 md:pt-20 pb-10">
+    <div class="absolute inset-x-0 top-0 flex h-2" aria-hidden="true">
+      <span class="flex-1 bg-night"></span><span class="flex-1 bg-violet"></span><span class="flex-1 bg-jaca"></span><span class="flex-1 bg-petal"></span><span class="flex-1 bg-lilac"></span><span class="flex-1 bg-mist"></span><span class="flex-1 bg-sun"></span>
+    </div>
+    <div class="pointer-events-none absolute -right-16 -bottom-16 hidden md:flex gap-3 rotate-[-14deg] opacity-70" aria-hidden="true">
+      <span class="w-28 h-44 rounded-2xl bg-violet"></span><span class="w-28 h-44 rounded-2xl bg-jaca"></span><span class="w-28 h-44 rounded-2xl bg-petal"></span>
+    </div>
+    <h2 class="relative font-display font-bold tracking-[-0.035em] leading-[0.92] text-[clamp(2.5rem,6vw,5rem)]">Want your project<br>on this page?</h2>
+    <p class="relative mt-6 text-lilac text-lg max-w-xl leading-relaxed">Tell me what you're selling or building. I'm available for freelance projects, contracts and development roles.</p>
+    <div class="relative mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
+      <a href="mailto:LyrixcsMiles@gmail.com" class="font-display font-bold text-[clamp(1.5rem,4vw,2.75rem)] tracking-tight underline underline-offset-[10px] decoration-2 decoration-jaca hover:decoration-sun transition-colors break-all">LyrixcsMiles@gmail.com</a>
+      <button type="button" @click="copyEmail()" class="inline-flex items-center gap-2 rounded-full border border-jaca hover:border-sun text-sm font-medium px-4 py-2 transition-colors">
+        <svg x-show="!copied" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" stroke-width="2"/><path stroke-width="2" d="M5 15V6a2 2 0 012-2h8"/></svg>
+        <svg x-show="copied" x-cloak class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+        <span x-text="copied ? 'Copied' : 'Copy email'"></span>
+      </button>
+    </div>
+    <div class="relative mt-14 pt-6 border-t border-violet flex flex-wrap gap-x-8 gap-y-3 text-sm text-lilac">
+      <a href="https://www.linkedin.com/in/lyrixcsmiles-dev" target="_blank" rel="noopener noreferrer" class="nl hover:text-sun transition-colors">LinkedIn</a>
+      <a href="https://github.com/Lyrixcs-Miles" target="_blank" rel="noopener noreferrer" class="nl hover:text-sun transition-colors">GitHub</a>
+      <a href="./resources/downloads/Anotidaishe_Mazhindu_CV_v6.pdf" download class="nl hover:text-sun transition-colors">CV (PDF)</a>
+      <a href="./resources/downloads/Anotidaishe_Mazhindu_CV_v6.docx" download class="nl hover:text-sun transition-colors">CV (Word)</a>
+      <span class="sm:ml-auto">Pretoria, South Africa</span>
+    </div>
+  </div>
+</section>
 
-          openGallery(p) {
-            this.gallery = p;
-            this.galleryIdx = 0;
-            document.body.style.overflow = "hidden";
-          },
+</main>
 
-          closeGallery() {
-            this.gallery = null;
-            document.body.style.overflow = "";
-          },
+<footer class="max-w-7xl mx-auto px-5 sm:px-8 pb-10 flex flex-col sm:flex-row justify-between gap-2 text-xs text-muted dark:text-muted-dark">
+  <p>© <span id="yr"></span> Richard Mazhindu</p>
+  <p>Developed by <a href="https://github.com/Lyrixcs-Miles/" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2">Lyrixcs Miles</a>, distributed by <a href="https://azhyre.co.za/" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2">AZHYRE</a></p>
+</footer>
 
-          filterOptions: [
+<script>
+function projects() {
+  return {
+    ...site(),
+    filter: 'all',
+    gallery: null,
+    galleryIdx: 0,
+    mats: ['bg-night text-white', 'bg-violet text-white', 'bg-jaca text-white', 'bg-petal text-ink', 'bg-lilac text-ink', 'bg-mist text-ink', 'bg-sun text-ink'],
+
+    filterOptions: [
             { value: "all", label: "All" },
             { value: "shopify", label: "Shopify stores" },
             { value: "website", label: "Websites" },
             { value: "app", label: "Web apps & tools" },
           ],
 
-          // To add a project, copy one of these objects. Leave "url" empty
-          // if there's nothing public to link to yet.
-          allProjects: [
+    // To add a project, copy one of these objects. Leave "url" empty
+    // if there's nothing public to link to yet.
+    allProjects: [
             {
               id: 1,
               name: "CurShip",
@@ -826,47 +426,17 @@
             },
           ],
 
-          get visibleCount() {
-            if (this.filter === "all") return this.allProjects.length;
-            return this.allProjects.filter((p) => p.category === this.filter)
-              .length;
-          },
+    mat(i) { return this.mats[i % this.mats.length]; },
+    count(v) { return v === 'all' ? this.allProjects.length : this.allProjects.filter(p => p.category === v).length; },
+    get visibleCount() { return this.count(this.filter); },
 
-          init() {
-            this.dark =
-              localStorage.getItem("theme") === "dark" ||
-              (!localStorage.getItem("theme") &&
-                window.matchMedia("(prefers-color-scheme: dark)").matches);
+    openGallery(p) { this.gallery = p; this.galleryIdx = 0; document.body.style.overflow = 'hidden'; },
+    closeGallery() { this.gallery = null; document.body.style.overflow = ''; },
 
-            window.addEventListener(
-              "scroll",
-              () => {
-                this.scrolled = window.scrollY > 20;
-              },
-              { passive: true },
-            );
+    init() { this.initSite(); },
+  };
+}
+</script>
 
-            this.$nextTick(() => {
-              const obs = new IntersectionObserver(
-                (entries) => {
-                  entries.forEach((e) => {
-                    if (e.isIntersecting) {
-                      e.target.classList.add("visible");
-                      obs.unobserve(e.target);
-                    }
-                  });
-                },
-                { threshold: 0.08, rootMargin: "0px 0px -30px 0px" },
-              );
-              document
-                .querySelectorAll(".reveal")
-                .forEach((el) => obs.observe(el));
-            });
-          },
-        };
-      }
-
-      document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
-  </body>
+</body>
 </html>
