@@ -37,12 +37,16 @@
               display: ["PT Sans", "sans-serif"],
               body: ["DM Sans", "sans-serif"],
             },
-            colors: { accent: "#FF6B2B", "accent-light": "#FF8F5C" },
+            colors: { accent: "rgb(var(--accent) / <alpha-value>)", "accent-light": "rgb(var(--accent-light) / <alpha-value>)", "on-accent": "rgb(var(--on-accent) / <alpha-value>)" },
           },
         },
       };
     </script>
     <style>
+/* Monochrome palette: the accent flips with the theme. */
+:root{--accent:15 15 15;--accent-light:77 77 77;--on-accent:255 255 255}
+.dark,.on-dark{--accent:222 222 222;--accent-light:188 188 188;--on-accent:15 15 15}
+
       *,
       *::before,
       *::after {
@@ -113,7 +117,7 @@
         background: transparent;
       }
       ::-webkit-scrollbar-thumb {
-        background: #ff6b2b;
+        background: rgb(var(--accent));
         border-radius: 99px;
       }
       body {
@@ -274,7 +278,7 @@
           </button>
           <a
             href="index.html#contact"
-            class="hidden md:inline-flex items-center gap-2 btn-primary bg-accent text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors"
+            class="hidden md:inline-flex items-center gap-2 btn-primary bg-accent text-on-accent text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors"
           >
             Hire me
             <svg
@@ -434,7 +438,7 @@
               <div class="p-8 md:p-12 flex flex-col justify-center">
                 <div class="flex items-center gap-3 mb-4">
                   <span
-                    class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full"
+                    class="text-xs bg-zinc-100 dark:bg-zinc-800 text-accent border border-zinc-300 dark:border-zinc-700 px-2.5 py-1 rounded-full"
                     >Dev</span
                   >
                   <span class="text-xs text-zinc-400"
@@ -480,7 +484,7 @@
               <div class="p-6">
                 <div class="flex items-center gap-3 mb-3">
                   <span
-                    class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full"
+                    class="text-xs bg-zinc-100 dark:bg-zinc-800 text-accent border border-zinc-300 dark:border-zinc-700 px-2.5 py-1 rounded-full"
                     >Shopify</span
                   >
                   <span class="text-xs text-zinc-400">Sep 22, 2026</span>
@@ -518,7 +522,7 @@
               <div class="p-6">
                 <div class="flex items-center gap-3 mb-3">
                   <span
-                    class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-2.5 py-1 rounded-full"
+                    class="text-xs bg-zinc-100 dark:bg-zinc-800 text-accent border border-zinc-300 dark:border-zinc-700 px-2.5 py-1 rounded-full"
                     >Journey</span
                   >
                   <span class="text-xs text-zinc-400">Aug 30, 2026</span>
