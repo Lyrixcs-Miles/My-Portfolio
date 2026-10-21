@@ -394,6 +394,8 @@
                     :href="p.url || null"
                     :target="p.external ? '_blank' : null"
                     :rel="p.external ? 'noopener noreferrer' : null"
+                    @click="if (p.gallery) { $event.preventDefault(); openGallery(p) }"
+                    :aria-label="p.gallery ? 'View ' + p.name + ' colourways' : null"
                     class="relative flex items-center justify-center w-full h-52 bg-gradient-to-br px-6 text-center overflow-hidden"
                     :class="p.panel"
                   >
@@ -436,7 +438,8 @@
                       class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4"
                       x-text="p.desc"
                     ></p>
-                    <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between gap-3">
+                      <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
                       <a
                         x-show="p.url"
                         :href="p.url"
@@ -450,6 +453,15 @@
                         class="text-sm text-zinc-400"
                         x-text="p.linkLabel"
                       ></span>
+                      <button
+                        x-show="p.gallery"
+                        type="button"
+                        @click="openGallery(p)"
+                        class="text-sm font-medium text-accent nav-link"
+                      >
+                        Colourways
+                      </button>
+                      </div>
                       <span
                         class="text-xs text-zinc-400"
                         x-text="p.year"
@@ -503,6 +515,82 @@
           </div>
         </div>
       </section>
+      <!-- Colourway gallery -->
+      <div
+        x-show="gallery"
+        x-cloak
+        x-transition.opacity.duration.200ms
+        @keydown.escape.window="closeGallery()"
+        class="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
+        @click.self="closeGallery()"
+        role="dialog"
+        aria-modal="true"
+        :aria-label="gallery ? gallery.name + ' colourways' : null"
+      >
+        <div
+          class="w-full max-w-3xl max-h-[90vh] flex flex-col bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-2xl"
+        >
+          <div
+            class="flex flex-wrap items-center justify-between gap-3 px-5 py-4 border-b border-zinc-100 dark:border-zinc-800"
+          >
+            <div>
+              <p
+                class="font-display font-bold text-lg text-zinc-900 dark:text-white"
+                x-text="gallery ? gallery.name + ' — product page' : ''"
+              ></p>
+              <p
+                class="text-xs text-zinc-500 dark:text-zinc-400"
+                x-text="gallery ? gallery.gallery[galleryIdx].label : ''"
+              ></p>
+            </div>
+            <div class="flex items-center gap-2">
+              <template x-for="(c, i) in (gallery ? gallery.gallery : [])" :key="c.label">
+                <button
+                  type="button"
+                  @click="galleryIdx = i; $refs.galleryScroll.scrollTop = 0"
+                  class="w-8 h-8 rounded-full border-2 transition-colors"
+                  :class="galleryIdx === i ? 'border-accent' : 'border-zinc-200 dark:border-zinc-700'"
+                  :style="`background:${c.swatch}`"
+                  :aria-label="c.label"
+                  :aria-pressed="galleryIdx === i"
+                ></button>
+              </template>
+              <button
+                type="button"
+                @click="closeGallery()"
+                class="ml-2 w-8 h-8 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-700 text-zinc-500 hover:text-accent hover:border-accent transition-colors"
+                aria-label="Close"
+              >
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div x-ref="galleryScroll" class="overflow-y-auto">
+            <template x-if="gallery">
+              <img
+                :src="gallery.gallery[galleryIdx].img"
+                :alt="gallery.name + ' product page in ' + gallery.gallery[galleryIdx].label"
+                class="block w-full h-auto"
+              />
+            </template>
+          </div>
+          <div
+            class="flex items-center justify-between gap-3 px-5 py-3 border-t border-zinc-100 dark:border-zinc-800 text-xs text-zinc-500 dark:text-zinc-400"
+          >
+            <span>Scroll to see the full page.</span>
+            <a
+              x-show="gallery && gallery.url"
+              :href="gallery ? gallery.url : null"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-medium text-accent nav-link"
+              >Visit live site ↗</a
+            >
+          </div>
+        </div>
+      </div>
     </main>
 
     <footer class="border-t border-zinc-100 dark:border-zinc-900">
@@ -525,6 +613,19 @@
           scrolled: false,
           mobileMenu: false,
           filter: "all",
+          gallery: null,
+          galleryIdx: 0,
+
+          openGallery(p) {
+            this.gallery = p;
+            this.galleryIdx = 0;
+            document.body.style.overflow = "hidden";
+          },
+
+          closeGallery() {
+            this.gallery = null;
+            document.body.style.overflow = "";
+          },
 
           filterOptions: [
             { value: "all", label: "All" },
@@ -658,6 +759,12 @@
               id: 9,
               name: "Blush&Bloom",
               img: "resources/imgs/projects/blush-bloom.webp",
+              gallery: [
+                { label: "Blush Pink", swatch: "#f2a9c6", img: "resources/imgs/projects/blush-bloom-pink.webp" },
+                { label: "Midnight Black", swatch: "#1f1f22", img: "resources/imgs/projects/blush-bloom-black.webp" },
+                { label: "Lavender", swatch: "#b9a6e6", img: "resources/imgs/projects/blush-bloom-lavender.webp" },
+                { label: "Mint", swatch: "#9fdcc4", img: "resources/imgs/projects/blush-bloom-mint.webp" },
+              ],
               title: "Blush&Bloom — tumbler storefront",
               category: "website",
               categoryLabel: "Website",
