@@ -49,7 +49,7 @@
         <svg x-show="!dark" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
         <svg x-show="dark" x-cloak class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
       </button>
-      <a href="#contact" class="hidden sm:inline-flex items-center bg-sun text-ink text-sm font-medium px-5 py-2 rounded-full hover:bg-[#F6D9C8] hover:-translate-y-0.5 transition">Hire me</a>
+      <a href="#contact" class="hidden sm:inline-flex items-center bg-sun text-ink text-sm font-medium px-5 py-2 rounded-full hover:bg-[#BFE0DA] hover:-translate-y-0.5 transition">Hire me</a>
       <button @click="mm=!mm" class="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-line dark:border-white/10" :aria-expanded="mm" aria-label="Menu">
         <svg x-show="!mm" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/></svg>
         <svg x-show="mm" x-cloak class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -99,7 +99,7 @@
     <template x-for="(p, i) in allProjects" :key="p.id">
       <div x-show="filter === 'all' || p.category === filter"
         x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-3" x-transition:enter-end="opacity-100 translate-y-0">
-        <article class="group h-full flex flex-col rounded-[26px] overflow-hidden bg-white dark:bg-white/[.04] ring-1 ring-line dark:ring-white/10 hover:-translate-y-1 hover:shadow-[0_30px_60px_-30px_rgba(46,38,64,.55)] transition duration-300">
+        <article class="group h-full flex flex-col rounded-[26px] overflow-hidden bg-white dark:bg-white/[.04] ring-1 ring-line dark:ring-white/10 hover:-translate-y-1 hover:shadow-[0_30px_60px_-30px_rgba(4,20,33,.55)] transition duration-300">
           <a :href="p.url || null" :target="p.external ? '_blank' : null" :rel="p.external ? 'noopener noreferrer' : null"
             @click="if (p.gallery) { $event.preventDefault(); openGallery(p) }"
             :aria-label="p.gallery ? 'View ' + p.name + ' pages' : null"
@@ -134,7 +134,7 @@
             <div class="mt-auto pt-6 flex flex-wrap items-center gap-2">
               <template x-if="p.url">
                 <a :href="p.url" :target="p.external ? '_blank' : null" :rel="p.external ? 'noopener noreferrer' : null"
-                  class="inline-flex items-center bg-sun text-ink text-sm font-medium px-4 py-2 rounded-full hover:bg-[#F6D9C8] hover:-translate-y-0.5 transition" x-text="p.linkLabel"></a>
+                  class="inline-flex items-center bg-sun text-ink text-sm font-medium px-4 py-2 rounded-full hover:bg-[#BFE0DA] hover:-translate-y-0.5 transition" x-text="p.linkLabel"></a>
               </template>
               <template x-if="!p.url">
                 <span class="text-sm text-muted dark:text-muted-dark px-1" x-text="p.linkLabel"></span>
@@ -228,7 +228,7 @@ function projects() {
     filter: 'all',
     gallery: null,
     galleryIdx: 0,
-    mats: ['bg-night text-white', 'bg-violet text-white', 'bg-jaca text-white', 'bg-petal text-ink', 'bg-lilac text-ink', 'bg-mist text-ink', 'bg-sun text-ink'],
+    mats: ['bg-night text-white', 'bg-violet text-white', 'bg-jaca text-white', 'bg-petal text-white', 'bg-lilac text-ink', 'bg-sun text-ink', 'bg-mist text-ink'],
 
     filterOptions: [
             { value: "all", label: "All" },
