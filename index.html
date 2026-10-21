@@ -72,6 +72,14 @@ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/sv
 /* skill tag */
 .stag{transition:border-color .18s}
 
+/* Accessible navigation and motion preferences. */
+section[id]{scroll-margin-top:80px}
+a:focus-visible,button:focus-visible{outline:2px solid #FF6B2B;outline-offset:5px}
+@media(prefers-reduced-motion:reduce){
+html.scroll-smooth{scroll-behavior:auto}
+*,*::before,*::after{transition:none!important;animation:none!important}
+.reveal{opacity:1;transform:none}
+}
 [x-cloak]{display:none!important}
 </style>
 </head>
@@ -88,8 +96,8 @@ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/sv
     </a>
 
     <ul class="hidden md:flex items-center gap-8 text-sm" role="list">
-      <li><a href="#services" class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='services'?'on !text-zinc-900 dark:!text-white':''">Services</a></li>
       <li><a href="#work"     class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='work'?'on !text-zinc-900 dark:!text-white':''">Work</a></li>
+      <li><a href="#services" class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='services'?'on !text-zinc-900 dark:!text-white':''">Services</a></li>
       <li><a href="#about"   class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='about'?'on !text-zinc-900 dark:!text-white':''">About</a></li>
       <li><a href="#reviews" class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='reviews'?'on !text-zinc-900 dark:!text-white':''">Reviews</a></li>
       <li><a href="#blog"    class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='blog'?'on !text-zinc-900 dark:!text-white':''">Blog</a></li>
@@ -120,8 +128,8 @@ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/sv
     x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
     class="md:hidden bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-900">
     <ul class="flex flex-col px-6 py-5 gap-4 text-sm font-medium" role="list">
-      <li><a href="#services" @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Services</a></li>
       <li><a href="#work"     @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Work</a></li>
+      <li><a href="#services" @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Services</a></li>
       <li><a href="#about"   @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">About</a></li>
       <li><a href="#reviews" @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Reviews</a></li>
       <li><a href="#blog"    @click="mm=false" class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Blog</a></li>
@@ -136,11 +144,11 @@ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/sv
 <main>
 
 <!-- ═══ HERO ═══ -->
-<section id="hero" class="relative min-h-screen flex items-center pt-16 overflow-hidden">
+<section id="hero" class="relative flex items-center pt-16 overflow-hidden">
   <div class="absolute top-1/4 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
   <div class="absolute bottom-1/4 left-0 w-64 h-64 bg-zinc-200/50 dark:bg-zinc-800/30 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
 
-  <div class="relative z-10 max-w-6xl mx-auto px-6 py-24 w-full">
+  <div class="relative z-10 max-w-6xl mx-auto px-6 pt-20 pb-20 md:pt-28 md:pb-24 w-full">
     <div class="grid md:grid-cols-2 gap-12 items-center">
 
       <div>
@@ -149,7 +157,7 @@ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/sv
           Hi, I'm <span class="text-accent">Richard</span>
         </h1>
         <p class="reveal d2 text-lg md:text-xl text-zinc-500 dark:text-zinc-400 font-light leading-relaxed max-w-md mb-10">
-          <strong class="font-medium text-zinc-700 dark:text-zinc-300">Web Developer</strong> in Pretoria, South Africa. I build Shopify stores, websites and web applications with React, Node.js and Supabase.
+          <strong class="font-medium text-zinc-700 dark:text-zinc-300">I build Shopify stores and web applications</strong> for growing businesses. Based in Pretoria, South Africa. Available for freelance projects, contracts and development roles.
         </p>
         <div class="reveal d3 flex flex-wrap gap-4">
           <a href="#work" class="shimmer inline-flex items-center gap-2 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-medium px-7 py-3.5 rounded-full hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors text-sm">
@@ -159,10 +167,10 @@ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/sv
           <a href="#contact" class="inline-flex items-center gap-2 border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 font-medium px-7 py-3.5 rounded-full hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors text-sm">Get in touch</a>
         </div>
         <div class="reveal d3 flex flex-wrap items-center gap-x-5 gap-y-2 mt-5 text-sm">
-          <a href="./resources/downloads/Anotidaishe_Mazhindu_CV_v6.pdf" download class="font-medium text-accent hover:underline underline-offset-4">Download CV (PDF)</a>
+          <a href="./resources/downloads/Anotidaishe_Mazhindu_CV_v6.pdf" download class="text-zinc-600 dark:text-zinc-400 hover:text-accent transition-colors hover:underline underline-offset-4">Download CV (PDF)</a>
           <a href="./resources/downloads/Anotidaishe_Mazhindu_CV_v6.docx" download class="text-zinc-600 dark:text-zinc-400 hover:text-accent transition-colors hover:underline underline-offset-4">Download CV (Word)</a>
         </div>
-        <div class="reveal d4 flex gap-8 mt-14 pt-8 border-t border-zinc-100 dark:border-zinc-900">
+        <div class="reveal d4 flex flex-wrap gap-x-8 gap-y-5 mt-10 pt-6 border-t border-zinc-100 dark:border-zinc-900">
           <div><p class="font-display font-bold text-3xl text-zinc-900 dark:text-white">12+</p><p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Projects done</p></div>
           <div><p class="font-display font-bold text-3xl text-zinc-900 dark:text-white">8+</p><p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Happy clients</p></div>
           <div><p class="font-display font-bold text-3xl text-zinc-900 dark:text-white">2025</p><p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Freelancing since</p></div>
@@ -182,47 +190,10 @@ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/sv
   </div>
 </section>
 
-<!-- ═══ SERVICES ═══ -->
-<section id="services" class="py-24 bg-zinc-50 dark:bg-zinc-900/40">
-  <div class="max-w-6xl mx-auto px-6">
-    <div class="mb-14">
-      <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">What I do</p>
-      <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">Services</h2>
-    </div>
-    <div class="grid md:grid-cols-3 gap-6">
-
-      <article class="reveal d1 card-h group bg-white dark:bg-zinc-900 rounded-2xl p-8 border border-zinc-100 dark:border-zinc-800 hover:border-accent">
-        <div class="w-12 h-12 flex items-center justify-center bg-orange-50 dark:bg-zinc-800 rounded-xl mb-6 group-hover:bg-accent/10 transition-colors">
-          <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2h-2"/></svg>
-        </div>
-        <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-3">Shopify Stores</h3>
-        <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Store setup, storefront design and customisation, product listings and settings. After launch, I keep the store running with ongoing maintenance.</p>
-      </article>
-
-      <article class="reveal d2 card-h group bg-zinc-900 dark:bg-zinc-800 rounded-2xl p-8 border border-zinc-800 hover:border-accent">
-        <div class="w-12 h-12 flex items-center justify-center bg-zinc-800 dark:bg-zinc-700 rounded-xl mb-6 group-hover:bg-accent/20 transition-colors">
-          <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
-        </div>
-        <h3 class="font-display font-bold text-xl text-white mb-3">Websites &amp; Web Apps</h3>
-        <p class="text-sm text-zinc-400 leading-relaxed">Standalone websites in HTML, CSS and JavaScript, WordPress or Webflow. Web applications built with React, Node.js and Supabase (PostgreSQL).</p>
-      </article>
-
-      <article class="reveal d3 card-h group bg-white dark:bg-zinc-900 rounded-2xl p-8 border border-zinc-100 dark:border-zinc-800 hover:border-accent">
-        <div class="w-12 h-12 flex items-center justify-center bg-orange-50 dark:bg-zinc-800 rounded-xl mb-6 group-hover:bg-accent/10 transition-colors">
-          <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>
-        </div>
-        <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-3">Design &amp; Marketing</h3>
-        <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Ad designs and email campaigns that match your store or site, made in Figma, Canva and Photoshop.</p>
-      </article>
-
-    </div>
-  </div>
-</section>
-
 <!-- ═══ WORK ═══ -->
 <section id="work" class="py-24">
   <div class="max-w-6xl mx-auto px-6">
-    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-14">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
       <div>
         <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Portfolio</p>
         <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">Selected work</h2>
@@ -237,6 +208,7 @@ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/sv
           <img src="./resources/imgs/projects/curship.webp" alt="CurShip dashboard on sample data" loading="lazy" class="object-top">
         </a>
         <div class="p-7">
+          <p class="text-xs font-medium uppercase tracking-widest text-accent mb-4">Featured project &middot; In development</p>
           <div class="flex flex-wrap gap-2 mb-4">
             <span class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-3 py-1 rounded-full">Web app</span>
             <span class="text-xs bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-3 py-1 rounded-full">React</span>
@@ -246,7 +218,8 @@ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/sv
           <a href="case-study.html">
             <h3 class="font-display font-bold text-2xl text-zinc-900 dark:text-white mb-2">CurShip — Shopify delivery app</h3>
           </a>
-          <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-5">A shipping app for South African Shopify stores. A merchant sees what an order costs to ship, books a courier, prints the label and follows the parcel without leaving Shopify.<br><br>It works with real Shopify orders: fulfilment, labels, and cancel with refund, tested in a development store. Courier booking is tested in The Courier Guy's sandbox, and the wallet runs in test mode. It isn't launched to merchants yet.</p>
+          <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-5">A shipping app for South African Shopify stores. Compare shipping costs, book couriers and manage labels without leaving Shopify.</p>
+          <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-6">Tested with Shopify orders in a development store and courier sandbox bookings. Not yet launched to merchants.</p>
           <div class="flex flex-wrap items-center gap-5">
             <a href="case-study.html" class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white nl">View case study <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
             <a href="https://curship.vercel.app" target="_blank" rel="noopener noreferrer" class="text-sm text-zinc-500 dark:text-zinc-400 hover:text-accent transition-colors nl">Demo (sample data) ↗</a>
@@ -286,6 +259,43 @@ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/sv
           <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4">Designed and set up the Shopify storefront, and support its ongoing maintenance.</p>
           <a href="https://paws.azhyre.co.za" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 dark:text-white nl">Visit paws.azhyre.co.za ↗</a>
         </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVICES ═══ -->
+<section id="services" class="py-16 md:py-20 bg-zinc-50 dark:bg-zinc-900/40">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="mb-10">
+      <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">What I do</p>
+      <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">Services</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <article class="reveal d1 card-h group bg-white dark:bg-zinc-900 rounded-2xl p-8 border border-zinc-100 dark:border-zinc-800 hover:border-accent">
+        <div class="w-12 h-12 flex items-center justify-center bg-orange-50 dark:bg-zinc-800 rounded-xl mb-6 group-hover:bg-accent/10 transition-colors">
+          <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2h-2"/></svg>
+        </div>
+        <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-3">Shopify Stores</h3>
+        <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">A storefront ready for your customers, with product listings, store settings and a design that fits your brand. Ongoing maintenance keeps it up to date after launch.</p>
+      </article>
+
+      <article class="reveal d2 card-h group bg-zinc-900 dark:bg-zinc-800 rounded-2xl p-8 border border-zinc-800 hover:border-accent">
+        <div class="w-12 h-12 flex items-center justify-center bg-zinc-800 dark:bg-zinc-700 rounded-xl mb-6 group-hover:bg-accent/20 transition-colors">
+          <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+        </div>
+        <h3 class="font-display font-bold text-xl text-white mb-3">Websites &amp; Web Apps</h3>
+        <p class="text-sm text-zinc-400 leading-relaxed">Responsive business websites and custom web applications, from public pages to dashboards and database-backed features. Built around what your business needs.</p>
+      </article>
+
+      <article class="reveal d3 card-h group bg-white dark:bg-zinc-900 rounded-2xl p-8 border border-zinc-100 dark:border-zinc-800 hover:border-accent">
+        <div class="w-12 h-12 flex items-center justify-center bg-orange-50 dark:bg-zinc-800 rounded-xl mb-6 group-hover:bg-accent/10 transition-colors">
+          <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>
+        </div>
+        <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-3">Design &amp; Marketing</h3>
+        <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Ad designs and email campaigns that carry your brand beyond the website. Consistent visuals for your next promotion, product launch or customer update.</p>
       </article>
 
     </div>
@@ -339,9 +349,9 @@ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/sv
 </section>
 
 <!-- ═══ TESTIMONIALS ═══ -->
-<section id="reviews" class="py-24">
+<section id="reviews" class="py-16 md:py-20">
   <div class="max-w-6xl mx-auto px-6">
-    <div class="mb-14">
+    <div class="mb-10">
       <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Social proof</p>
       <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">What clients say</h2>
     </div>
@@ -407,9 +417,9 @@ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/sv
 </section>
 
 <!-- ═══ BLOG ═══ -->
-<section id="blog" class="py-24 bg-zinc-50 dark:bg-zinc-900/40">
+<section id="blog" class="py-16 md:py-20 bg-zinc-50 dark:bg-zinc-900/40">
   <div class="max-w-6xl mx-auto px-6">
-    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-14">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
       <div>
         <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Thoughts</p>
         <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">From the blog</h2>
@@ -593,7 +603,7 @@ function app() {
     updateSection() {
       const atBottom = (window.innerHeight + window.scrollY) >= document.body.scrollHeight - 60;
       if (atBottom) { this.s = 'contact'; return; }
-      const ids = ['contact','blog','reviews','about','work','services','hero'];
+      const ids = ['contact','blog','reviews','about','services','work','hero'];
       for (const id of ids) {
         const el = document.getElementById(id);
         if (el && window.scrollY >= el.offsetTop - 130) { this.s = id; return; }
